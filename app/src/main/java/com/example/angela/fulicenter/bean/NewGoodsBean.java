@@ -49,6 +49,7 @@ public class NewGoodsBean {
     private boolean promote;
 
     public NewGoodsBean() {
+
     }
 
     @Override

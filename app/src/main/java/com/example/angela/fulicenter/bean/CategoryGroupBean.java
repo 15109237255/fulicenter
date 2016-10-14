@@ -17,6 +17,7 @@ public class CategoryGroupBean {
     private String imageUrl;
 
     public CategoryGroupBean() {
+
     }
 
     @Override

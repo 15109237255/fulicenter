@@ -27,6 +27,7 @@ public class CollectBean {
     private long addTime;
 
     public CollectBean() {
+
     }
 
     @Override

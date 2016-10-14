@@ -21,6 +21,7 @@ public  class AlbumsBean {
     }
 
     public AlbumsBean() {
+
     }
 
     public int getPid() {

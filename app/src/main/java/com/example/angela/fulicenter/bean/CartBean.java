@@ -25,6 +25,7 @@ public class CartBean {
     private boolean checked;
 
     public CartBean() {
+
     }
 
     @Override

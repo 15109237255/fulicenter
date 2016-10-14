@@ -21,6 +21,7 @@ public class BoutiqueBean {
     private String imageurl;
 
     public BoutiqueBean() {
+
     }
 
     @Override

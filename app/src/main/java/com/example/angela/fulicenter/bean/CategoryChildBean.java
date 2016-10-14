@@ -19,6 +19,7 @@ public class CategoryChildBean {
     private String imageUrl;
 
     public CategoryChildBean() {
+
     }
 
     @Override

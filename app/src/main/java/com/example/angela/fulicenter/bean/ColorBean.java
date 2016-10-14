@@ -11,6 +11,7 @@ public class ColorBean {
     private String colorUrl;
 
     public ColorBean() {
+
     }
 
     @Override

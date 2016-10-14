@@ -15,6 +15,7 @@ public class MessageBean {
     private String msg;
 
     public MessageBean() {
+
     }
 
     @Override

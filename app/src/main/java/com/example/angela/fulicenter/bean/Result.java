@@ -25,6 +25,7 @@ public class Result {
     private String mavatarLastUpdateTime;
 
     public Result() {
+
     }
 
     @Override

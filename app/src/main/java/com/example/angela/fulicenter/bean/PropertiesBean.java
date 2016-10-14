@@ -17,6 +17,7 @@ public  class PropertiesBean {
     private String colorUrl;
 
     public PropertiesBean() {
+
     }
 
     @Override

@@ -82,6 +82,7 @@ public class GoodsDetailsBean {
                 ", properties=" + properties +
                 '}';
     }
+
     public int getId() {
         return id;
     }
