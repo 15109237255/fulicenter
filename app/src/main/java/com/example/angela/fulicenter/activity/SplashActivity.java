@@ -3,6 +3,8 @@ package com.example.angela.fulicenter.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.animation.AlphaAnimation;
+import android.widget.RelativeLayout;
 
 import com.example.angela.fulicenter.R;
 
@@ -13,6 +15,11 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        AlphaAnimation animation=new AlphaAnimation(0.3f,1.0f);
+        animation.setDuration(1500);
+        RelativeLayout mActivitySplash= (RelativeLayout) findViewById(R.id.activity_splash);
+        mActivitySplash.startAnimation(animation);
+
     }
 
     @Override
@@ -32,6 +39,7 @@ public class SplashActivity extends AppCompatActivity {
                     }
                 }
                 startActivity(new Intent(SplashActivity.this,MainActivity.class));
+                finish();
             }
 
         }).start();
