@@ -26,11 +26,12 @@ public class SplashActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         new Thread(new Runnable() {
+            long start = System.currentTimeMillis();
+            //create db
+            long costTime = System.currentTimeMillis() - start;
             @Override
             public void run() {
-                long start = System.currentTimeMillis();
-                //create db
-                long costTime = System.currentTimeMillis() - start;
+
                 if (sleepTime-costTime>0){
                     try{
                         Thread.sleep(sleepTime-costTime);
