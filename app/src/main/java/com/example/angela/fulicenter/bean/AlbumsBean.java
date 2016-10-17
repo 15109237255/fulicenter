@@ -1,28 +1,13 @@
 package com.example.angela.fulicenter.bean;
 
-/**
- * Created by Winston on 2016/10/13.
- */
+import java.io.Serializable;
 
-public  class AlbumsBean {
+public class AlbumsBean implements Serializable {
+
     private int pid;
     private int imgId;
     private String imgUrl;
     private String thumbUrl;
-
-    @Override
-    public String toString() {
-        return "AlbumsBean{" +
-                "pid=" + pid +
-                ", imgId=" + imgId +
-                ", imgUrl='" + imgUrl + '\'' +
-                ", thumbUrl='" + thumbUrl + '\'' +
-                '}';
-    }
-
-    public AlbumsBean() {
-
-    }
 
     public int getPid() {
         return pid;
@@ -55,5 +40,14 @@ public  class AlbumsBean {
     public void setThumbUrl(String thumbUrl) {
         this.thumbUrl = thumbUrl;
     }
-}
 
+    @Override
+    public String toString() {
+        return "AlbumsBean{" +
+                "pid=" + pid +
+                ", imgId=" + imgId +
+                ", imgUrl='" + imgUrl + '\'' +
+                ", thumbUrl='" + thumbUrl + '\'' +
+                '}';
+    }
+}
