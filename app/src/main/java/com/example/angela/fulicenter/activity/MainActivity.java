@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -29,8 +28,6 @@ public class MainActivity extends AppCompatActivity {
     TextView mTvCartHint;
     @BindView(R.id.layout_personal_center)
     RadioButton mLayoutPersonalCenter;
-    @BindView(R.id.rg_bottom_layout)
-    RadioGroup mRgBottomLayout;
     @BindView(R.id.fragment_container)
     RelativeLayout mFragmentContainer;
     @BindView(R.id.mainLayout)
@@ -38,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
     int index;
     RadioButton[] rbs;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
         rbs[2] = mLayoutCategory;
         rbs[3] = mLayoutCart;
         rbs[4] = mLayoutPersonalCenter;
-
     }
 
     public void onCheckedChange(View v) {
@@ -79,11 +76,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setRadioButtonStatus() {
+        L.d("index="+index);
         for (int i = 0; i < rbs.length; i++) {
             if (i == index) {
-                rbs[i].setSelected(true);
+                rbs[i].setChecked(true);
             } else {
-                rbs[i].setSelected(false);
+                rbs[i].setChecked(false);
             }
         }
     }
