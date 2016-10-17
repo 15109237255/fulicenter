@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:background="@color/white"
+              android:layout_margin="15dp"
+              android:id="@+id/layout_goods"
+              android:weightSum="1"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:id="@+id/ivGoodsThumb"
+        android:scaleType="fitXY"
+        android:layout_gravity="center"
+        android:src="@drawable/nopic"
+        android:layout_weight="10.42"
+        />
+    <TextView
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvGoodsName"
+        android:textColor="@color/item_good_text"
+        android:textSize="13sp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="3dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:text="商品名称商品名称"
+        />
+    <TextView
+        android:id="@+id/tvGoodsPrice"
+        android:textColor="@color/item_good_text"
+        android:textSize="13sp"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:text="$399.99"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>
