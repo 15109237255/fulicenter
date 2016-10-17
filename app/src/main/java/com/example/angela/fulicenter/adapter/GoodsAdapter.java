@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.example.angela.fulicenter.I;
 import com.example.angela.fulicenter.R;
 import com.example.angela.fulicenter.bean.NewGoodsBean;
+import com.example.angela.fulicenter.utlis.ImageLoader;
 
 import java.util.List;
 
@@ -50,7 +51,7 @@ public class GoodsAdapter extends Adapter {
         }else {
             GoodsViewHolder vh= (GoodsViewHolder) holder;
             NewGoodsBean goods = mList.get(position);
-            //set image
+            ImageLoader.downloadImg(mContext,vh.mIvGoodsThumb,goods.getGoodsThumb());
             vh.mTvGoodsName.setText(goods.getGoodsName());
             vh.mTvGoodsPrice.setText(goods.getCurrencyPrice());
         }
