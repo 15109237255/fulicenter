@@ -47,6 +47,7 @@ public class NewGoodsFragment extends Fragment {
     int pageId=1;
 
 
+
     public View onCreateView(LayoutInflater inflater,  ViewGroup container,  Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.fragment_newgoods, container, false);
         ButterKnife.bind(this, layout);
@@ -58,15 +59,23 @@ public class NewGoodsFragment extends Fragment {
         return layout;
     }
 
+
+
     private void initData() {
         NetDao.downloadNewGoods(mContext, pageId, new OkHttpUtils.OnCompleteListener<NewGoodsBean[]>() {
             @Override
             public void onSuccess(NewGoodsBean[] result) {
                 msrl.setRefreshing(false);
                 mtvRfresh.setVisibility(View.GONE);
+                mAdapter.setMore(true);
                 if (result != null && result.length > 0) {
                     ArrayList<NewGoodsBean> list = ConvertUtils.array2List(result);
                     mAdapter.initData(list);
+                    if (list.size()<I.PAGE_SIZE_DEFAULT){
+                        mAdapter.setMore(false);
+                    }
+                }else {
+                    mAdapter.setMore(false);
                 }
             }
 
