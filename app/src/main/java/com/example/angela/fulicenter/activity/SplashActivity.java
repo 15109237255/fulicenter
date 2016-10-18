@@ -6,7 +6,7 @@ import android.view.animation.AlphaAnimation;
 import android.widget.RelativeLayout;
 
 import com.example.angela.fulicenter.R;
-import com.example.angela.fulicenter.utlils.MFGT;
+import com.example.angela.fulicenter.utlis.MFGT;
 
 public class SplashActivity extends AppCompatActivity {
     private final long sleepTime=2000;

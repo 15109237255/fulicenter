@@ -1,14 +1,15 @@
 package com.example.angela.fulicenter.activity;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.RadioButton;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.angela.fulicenter.R;
-import com.example.angela.fulicenter.utlils.L;
+import com.example.angela.fulicenter.fregment.NewGoodsFragment;
+import com.example.angela.fulicenter.utlis.L;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,21 +29,30 @@ public class MainActivity extends AppCompatActivity {
     TextView mTvCartHint;
     @BindView(R.id.layout_personal_center)
     RadioButton mLayoutPersonalCenter;
-    @BindView(R.id.fragment_container)
-    RelativeLayout mFragmentContainer;
-    @BindView(R.id.mainLayout)
-    RelativeLayout mMainLayout;
 
     int index;
     RadioButton[] rbs;
+    Fragment[] mFragments;
+    NewGoodsFragment mNewGoodsFragment;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+        protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         L.d("MainActivity onCreate");
         initView();
+        initFragment();
+    }
+
+    private void initFragment() {
+        mFragments=new Fragment[5];
+        mNewGoodsFragment=new NewGoodsFragment();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.fragment_container,mNewGoodsFragment)
+                .show(mNewGoodsFragment)
+                .commit();
     }
 
     private void initView() {

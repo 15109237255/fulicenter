@@ -17,6 +17,7 @@ import com.example.angela.fulicenter.adapter.GoodsAdapter;
 import com.example.angela.fulicenter.bean.NewGoodsBean;
 import com.example.angela.fulicenter.net.NetDao;
 import com.example.angela.fulicenter.net.OkHttpUtils;
+import com.example.angela.fulicenter.utlis.CommonUtils;
 import com.example.angela.fulicenter.utlis.ConvertUtils;
 import com.example.angela.fulicenter.utlis.L;
 
@@ -61,7 +62,8 @@ public class NewGoodsFragment extends Fragment {
         NetDao.downloadNewGoods(mContext, pageId, new OkHttpUtils.OnCompleteListener<NewGoodsBean[]>() {
             @Override
             public void onSuccess(NewGoodsBean[] result) {
-                     L.e("sdfafdafa");
+                msrl.setRefreshing(false);
+                mtvRfresh.setVisibility(View.GONE);
                 if (result != null && result.length > 0) {
                     ArrayList<NewGoodsBean> list = ConvertUtils.array2List(result);
                     mAdapter.initData(list);
@@ -70,6 +72,9 @@ public class NewGoodsFragment extends Fragment {
 
             @Override
             public void onError(String error) {
+                msrl.setRefreshing(false);
+                mtvRfresh.setVisibility(View.GONE);
+                CommonUtils.showLongToast(error);
                 L.e("error: "+error);
             }
         });

@@ -14,6 +14,7 @@ import com.example.angela.fulicenter.R;
 import com.example.angela.fulicenter.bean.NewGoodsBean;
 import com.example.angela.fulicenter.utlis.ImageLoader;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -28,9 +29,11 @@ public class GoodsAdapter extends Adapter {
     Context mContext;
 
 
-    public GoodsAdapter(List<NewGoodsBean> list, Context context) {
-        mList = list;
-        mContext = context;
+    public GoodsAdapter(Context context,List<NewGoodsBean> list) {
+        this.mContext=context;
+        mList = new ArrayList<>();
+        mList.addAll(list);
+
     }
 
     @Override
@@ -67,7 +70,15 @@ public class GoodsAdapter extends Adapter {
         if (position == getItemCount() - 1) {
             return I.TYPE_FOOTER;
         }
-        return I.TYPE_FOOTER;
+        return I.TYPE_ITEM;
+    }
+
+    public void initData(ArrayList<NewGoodsBean> list) {
+        if (mList!=null){
+            mList.clear();
+        }
+        mList.addAll(list);
+        notifyDataSetChanged();
     }
 
     static class GoodsViewHolder extends ViewHolder{

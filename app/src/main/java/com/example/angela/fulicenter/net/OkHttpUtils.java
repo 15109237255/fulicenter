@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 
-import com.example.angela.fulicenter.FuLiCenterApplication;
 import com.example.angela.fulicenter.I;
 import com.example.angela.fulicenter.bean.Result;
 import com.example.angela.fulicenter.utlis.L;
@@ -145,7 +144,8 @@ public class OkHttpUtils<T> {
 
 
     private void initHandler() {
-        mHandler = new Handler(FuLiCenterApplication.getInstance().getMainLooper()) {
+//        mHandler = new Handler(FuLiCenterApplication.getInstance().getMainLooper()) {
+          mHandler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
                 switch (msg.what) {
@@ -422,11 +422,11 @@ public class OkHttpUtils<T> {
      * @return
      */
     public <T> T parseJson(Result result, Class<?> clazz) {
-//        if (result.getRetCode() == 0) {
-//            String json = result.getRetData().toString();
-//            T t = parseJson(json, clazz);
-//            return t;
-//        }
+        if (result.getRetCode() == 0) {
+            String json = result.getRetData().toString();
+            T t = parseJson(json, clazz);
+            return t;
+        }
         return null;
     }
 
