@@ -25,9 +25,6 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-
-
 /**
  * Created by xiaomiao on 2016/10/17.
  */
@@ -45,6 +42,7 @@ public class NewGoodsFragment extends Fragment {
     GoodsAdapter mAdapter;
     ArrayList<NewGoodsBean> mList;
     int pageId=1;
+    GridLayoutManager glm;
 
 
 
@@ -56,12 +54,32 @@ public class NewGoodsFragment extends Fragment {
         mAdapter = new GoodsAdapter(mContext,mList);
         initView();
         initData();
+        setListener();
         return layout;
     }
 
+    private void setListener() {
+        setPullUpListener();//上拉刷新
+        setPullDownListener();//下拉刷新
+    }
 
+    /**
+     * 上拉刷新
+     */
+    private void   setPullUpListener() {
+        msrl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                msrl.setRefreshing(true);
+                mtvRfresh.setVisibility(View.VISIBLE);
+                pageId=1;
+                downloadNewGoods(I.ACTION_PULL_UP);
+            }
+        });
 
-    private void initData() {
+    }
+
+    private void downloadNewGoods(final int action) {
         NetDao.downloadNewGoods(mContext, pageId, new OkHttpUtils.OnCompleteListener<NewGoodsBean[]>() {
             @Override
             public void onSuccess(NewGoodsBean[] result) {
@@ -70,6 +88,9 @@ public class NewGoodsFragment extends Fragment {
                 mAdapter.setMore(true);
                 if (result != null && result.length > 0) {
                     ArrayList<NewGoodsBean> list = ConvertUtils.array2List(result);
+                    if (action==I.ACTION_DOWNLOAD||action==I.ACTION_PULL_DOWN){
+                        mAdapter.addData(list);
+                    }
                     mAdapter.initData(list);
                     if (list.size()<I.PAGE_SIZE_DEFAULT){
                         mAdapter.setMore(false);
@@ -83,10 +104,49 @@ public class NewGoodsFragment extends Fragment {
             public void onError(String error) {
                 msrl.setRefreshing(false);
                 mtvRfresh.setVisibility(View.GONE);
+                mAdapter.setMore(false);
                 CommonUtils.showLongToast(error);
                 L.e("error: "+error);
             }
         });
+    }
+
+    /**
+     * 下拉刷新
+     */
+    private void setPullDownListener() {
+        mrv.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            /**
+             * 再次请求数据，请求下一页数据
+             * @param recyclerView
+             * @param newState
+             */
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                int lastPosition = glm.findLastVisibleItemPosition();
+                if (newState==RecyclerView.SCROLL_STATE_IDLE
+                        &&lastPosition==mAdapter.getItemCount()-1
+                        &&mAdapter.isMore()){
+                    pageId++;
+                    downloadNewGoods(I.ACTION_PULL_DOWN);
+
+                }
+
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+//                int firstPosition = glm.findFirstVisibleItemPosition();
+//                msrl.setEnabled(firstPosition==0);
+            }
+        });
+    }
+
+
+    private void initData() {
+        downloadNewGoods(I.ACTION_DOWNLOAD);
     }
 
     private void initView() {
@@ -96,7 +156,7 @@ public class NewGoodsFragment extends Fragment {
                 getResources().getColor(R.color.google_red),
                 getResources().getColor(R.color.google_yellow)
         );
-        GridLayoutManager glm = new GridLayoutManager(mContext, I.COLUM_NUM);
+        glm = new GridLayoutManager(mContext, I.COLUM_NUM);
         mrv.setLayoutManager(glm);
         mrv.setHasFixedSize(true);
         mrv.setAdapter(mAdapter);
