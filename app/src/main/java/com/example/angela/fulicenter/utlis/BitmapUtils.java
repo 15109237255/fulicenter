@@ -1,4 +1,4 @@
-package com.example.angela.fulicenter.utlils;
+package com.example.angela.fulicenter.utlis;
 
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;

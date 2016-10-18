@@ -7,11 +7,16 @@ import android.app.Application;
  */
 
 public class FuLiCenterApplication extends Application{
+    public static FuLiCenterApplication appliction;
     private static FuLiCenterApplication instance;
 
-    public FuLiCenterApplication(){
-        instance =this;
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        appliction=this;
+        instance=this;
     }
+
     public  static FuLiCenterApplication getInstance(){
         if (instance==null){
             instance =new FuLiCenterApplication();

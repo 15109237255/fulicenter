@@ -1,4 +1,4 @@
-package com.example.angela.fulicenter.utlils;
+package com.example.angela.fulicenter.utlis;
 
 import android.app.Activity;
 import android.content.Intent;
