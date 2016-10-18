@@ -20,6 +20,7 @@ import com.example.angela.fulicenter.net.OkHttpUtils;
 import com.example.angela.fulicenter.utlis.CommonUtils;
 import com.example.angela.fulicenter.utlis.ConvertUtils;
 import com.example.angela.fulicenter.utlis.L;
+import com.example.angela.fulicenter.view.SpaceItemDecoration;
 
 import java.util.ArrayList;
 
@@ -160,6 +161,7 @@ public class NewGoodsFragment extends Fragment {
         mrv.setLayoutManager(glm);
         mrv.setHasFixedSize(true);
         mrv.setAdapter(mAdapter);
+        mrv.addItemDecoration(new SpaceItemDecoration(12));
     }
 
 }

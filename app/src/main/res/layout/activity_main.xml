@@ -61,12 +61,10 @@
                         android:id="@+id/tvCartHint"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:background="@drawable/cart_hint"
                         android:layout_marginLeft="15dp"
                         android:gravity="center"
                         android:padding="2dp"
                         android:paddingLeft="50dp"
-                        android:text="100"
                         android:textColor="#fff"
                         android:textSize="12dp"
                         />
