@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.angela.fulicenter.I;
 import com.example.angela.fulicenter.R;
 import com.example.angela.fulicenter.activity.MainActivity;
 import com.example.angela.fulicenter.adapter.BoutiqueAdapter;
@@ -54,34 +53,41 @@ public class BoutiqueFragment extends Fragment {
         mAdapter=new BoutiqueAdapter(mContext,mList);
         initView();
         initData();
+        setListener();
         return layout;
     }
 
-    private void initData() {
-        downloadBoutique(I.ACTION_DOWNLOAD);
+    private void setListener() {
+        setPullDownListener();//下拉刷新
+    }
+
+    private void setPullDownListener() {
+        mSrl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mSrl.setRefreshing(true);
+                mTvRefresh.setVisibility(View.VISIBLE);
+                downloadBoutique();
+            }
+        });
 
     }
 
-    private void downloadBoutique(final int action) {
+    private void initData() {
+        downloadBoutique();
+
+    }
+
+    private void downloadBoutique() {
         NetDao.downloadBoutique(mContext, new OkHttpUtils.OnCompleteListener<BoutiqueBean[]>() {
             @Override
             public void onSuccess(BoutiqueBean[] result) {
                 //刷新隐藏
                 mSrl.setRefreshing(false);
                 mTvRefresh.setVisibility(View.GONE);
-                mAdapter.setMore(true);
                 if (result != null && result.length > 0) {
-                ArrayList<BoutiqueBean> list = ConvertUtils.array2List(result);
-                    if (action==I.ACTION_DOWNLOAD||action==I.ACTION_PULL_DOWN){
-                        mAdapter.initData(list);
-                    }else {
-                        mAdapter.addData(list);
-                    }
-                    if (list.size()<I.PAGE_SIZE_DEFAULT){
-                        mAdapter.setMore(false);
-                    }
-                }else {
-                    mAdapter.setMore(false);
+                    ArrayList<BoutiqueBean> list = ConvertUtils.array2List(result);
+                    mAdapter.initData(list);
                 }
             }
 
@@ -89,7 +95,6 @@ public class BoutiqueFragment extends Fragment {
             public void onError(String error) {
                 mSrl.setRefreshing(false);
                 mTvRefresh.setVisibility(View.GONE);
-                mAdapter.setMore(false);
                 CommonUtils.showLongToast(error);
                 L.e("error: "+error);
             }

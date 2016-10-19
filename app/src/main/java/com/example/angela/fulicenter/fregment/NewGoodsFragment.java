@@ -62,6 +62,7 @@ public class NewGoodsFragment extends Fragment {
     private void setListener() {
         setPullUpListener();//上拉刷新
         setPullDownListener();//下拉刷新
+
     }
 
     /**
