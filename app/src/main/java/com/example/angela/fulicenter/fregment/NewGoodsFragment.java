@@ -90,9 +90,10 @@ public class NewGoodsFragment extends Fragment {
                 if (result != null && result.length > 0) {
                     ArrayList<NewGoodsBean> list = ConvertUtils.array2List(result);
                     if (action==I.ACTION_DOWNLOAD||action==I.ACTION_PULL_DOWN){
+                        mAdapter.initData(list);
+                    }else {
                         mAdapter.addData(list);
                     }
-                    mAdapter.initData(list);
                     if (list.size()<I.PAGE_SIZE_DEFAULT){
                         mAdapter.setMore(false);
                     }

@@ -100,7 +100,20 @@ public class BoutiqueAdapter extends Adapter {
         return I.TYPE_ITEM;
     }
 
-     class BoutiqueViewHodler extends ViewHolder{
+    public void initData(ArrayList<BoutiqueBean> list) {
+        if (mList!=null){
+            mList.clear();
+        }
+        mList.addAll(list);
+        notifyDataSetChanged();
+    }
+
+    public void addData(ArrayList<BoutiqueBean> list) {
+        mList.addAll(list);
+        notifyDataSetChanged();
+    }
+
+    class BoutiqueViewHodler extends ViewHolder{
         @BindView(R.id.ivBoutiqueImg)
         ImageView mIvBoutiqueImg;
         @BindView(R.id.tvBoutiqueTitle)
