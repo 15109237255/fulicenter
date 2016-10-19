@@ -14,6 +14,7 @@ import com.example.angela.fulicenter.R;
 import com.example.angela.fulicenter.bean.NewGoodsBean;
 import com.example.angela.fulicenter.utlis.ImageLoader;
 import com.example.angela.fulicenter.utlis.MFGT;
+import com.example.angela.fulicenter.view.FooterViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -128,13 +129,5 @@ public class GoodsAdapter extends Adapter {
         }
     }
 
-    static class FooterViewHolder extends ViewHolder{
-        @BindView(R.id.tvFooter)
-        TextView mTvFooter;
 
-        FooterViewHolder(View view) {
-            super(view);
-            ButterKnife.bind(this, view);
-        }
-    }
 }
