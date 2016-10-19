@@ -1,7 +1,6 @@
 package com.example.angela.fulicenter.fregment;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,7 +29,7 @@ import butterknife.ButterKnife;
  * Created by xiaomiao on 2016/10/17.
  */
 
-public class NewGoodsFragment extends Fragment {
+public class NewGoodsFragment extends BaseFragment {
 
     @BindView(R.id.tv_refresh)
     TextView mtvRfresh;
@@ -48,18 +47,17 @@ public class NewGoodsFragment extends Fragment {
 
 
     public View onCreateView(LayoutInflater inflater,  ViewGroup container,  Bundle savedInstanceState) {
+        L.d("NewGoodsFragment.onCreateView");
         View layout = inflater.inflate(R.layout.fragment_newgoods, container, false);
         ButterKnife.bind(this, layout);
         mContext = (MainActivity) getContext();
         mList = new ArrayList<>();
         mAdapter = new GoodsAdapter(mContext,mList);
-        initView();
-        initData();
-        setListener();
+        super.onCreateView(inflater,container,savedInstanceState);
         return layout;
     }
-
-    private void setListener() {
+@Override
+    protected void setListener() {
         setPullUpListener();//上拉刷新
         setPullDownListener();//下拉刷新
 
@@ -147,12 +145,12 @@ public class NewGoodsFragment extends Fragment {
         });
     }
 
-
-    private void initData() {
+    @Override
+    protected void initData() {
         downloadNewGoods(I.ACTION_DOWNLOAD);
     }
-
-    private void initView() {
+    @Override
+    protected void initView() {
         msrl.setColorSchemeColors(
                 getResources().getColor(R.color.google_blue),
                 getResources().getColor(R.color.google_green),
