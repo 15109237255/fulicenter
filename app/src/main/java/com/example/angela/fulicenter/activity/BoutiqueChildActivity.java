@@ -1,17 +1,14 @@
-package com.example.angela.fulicenter.fregment;
+package com.example.angela.fulicenter.activity;
 
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.angela.fulicenter.I;
 import com.example.angela.fulicenter.R;
-import com.example.angela.fulicenter.activity.MainActivity;
 import com.example.angela.fulicenter.adapter.GoodsAdapter;
 import com.example.angela.fulicenter.bean.NewGoodsBean;
 import com.example.angela.fulicenter.net.NetDao;
@@ -25,66 +22,84 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-/**
- * Created by xiaomiao on 2016/10/17.
- */
+import butterknife.OnClick;
 
-public class NewGoodsFragment extends BaseFragment {
+public class BoutiqueChildActivity extends BaseActivity {
 
+    @BindView(R.id.tv_common_title)
+    TextView mTvCommonTitle;
     @BindView(R.id.tv_refresh)
-    TextView mtvRfresh;
+    TextView mTvRefresh;
     @BindView(R.id.rv)
-    RecyclerView mrv;
+    RecyclerView mRv;
     @BindView(R.id.srl)
-    SwipeRefreshLayout msrl;
+    SwipeRefreshLayout mSrl;
 
-    MainActivity mContext;
+    BoutiqueChildActivity mContext;
     GoodsAdapter mAdapter;
     ArrayList<NewGoodsBean> mList;
     int pageId=1;
     GridLayoutManager glm;
+    int catId;
 
-
-
-    public View onCreateView(LayoutInflater inflater,  ViewGroup container,  Bundle savedInstanceState) {
-        L.d("NewGoodsFragment.onCreateView");
-        View layout = inflater.inflate(R.layout.fragment_newgoods, container, false);
-        ButterKnife.bind(this, layout);
-        mContext = (MainActivity) getContext();
-        mList = new ArrayList<>();
-        mAdapter = new GoodsAdapter(mContext,mList);
-        super.onCreateView(inflater,container,savedInstanceState);
-        return layout;
-    }
     @Override
-    protected void setListener() {
-        setPullUpListener();//上拉刷新
-        setPullDownListener();//下拉刷新
+    protected void onCreate(Bundle savedInstanceState) {
+        setContentView(R.layout.activity_boutique_child);
+        ButterKnife.bind(this);
+        catId=getIntent().getIntExtra(I.Boutique.CAT_ID,0);
+        if (catId==0){
+            finish();
+        }
+        mContext=this;
+        mList=new ArrayList<>();
+        mAdapter=new GoodsAdapter(mContext,mList);
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    protected void initView() {
+        mSrl.setColorSchemeColors(
+                getResources().getColor(R.color.google_blue),
+                getResources().getColor(R.color.google_green),
+                getResources().getColor(R.color.google_red),
+                getResources().getColor(R.color.google_yellow)
+        );
+        glm = new GridLayoutManager(mContext, I.COLUM_NUM);
+        mRv.setLayoutManager(glm);
+        mRv.setHasFixedSize(true);
+        mRv.setAdapter(mAdapter);
+        mRv.addItemDecoration(new SpaceItemDecoration(10));
 
     }
 
-    /**
-     * 上拉刷新
-     */
+
+        @Override
+        protected void setListener () {
+            setPullUpListener();//上拉刷新
+            setPullDownListener();//下拉刷新
+        }
+
+
+        /**
+         * 上拉刷新
+         */
     private void   setPullUpListener() {
-        msrl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        mSrl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                msrl.setRefreshing(true);
-                mtvRfresh.setVisibility(View.VISIBLE);
+                mSrl.setRefreshing(true);
+                mTvRefresh.setVisibility(View.VISIBLE);
                 pageId=1;
                 downloadNewGoods(I.ACTION_PULL_UP);
             }
         });
-
     }
-
     private void downloadNewGoods(final int action) {
-        NetDao.downloadNewGoods(mContext,I.CAT_ID,pageId, new OkHttpUtils.OnCompleteListener<NewGoodsBean[]>() {
+        NetDao.downloadNewGoods(mContext,catId,pageId, new OkHttpUtils.OnCompleteListener<NewGoodsBean[]>() {
             @Override
             public void onSuccess(NewGoodsBean[] result) {
-                msrl.setRefreshing(false);
-                mtvRfresh.setVisibility(View.GONE);
+                mSrl.setRefreshing(false);
+                mTvRefresh.setVisibility(View.GONE);
                 mAdapter.setMore(true);
                 if (result != null && result.length > 0) {
                     ArrayList<NewGoodsBean> list = ConvertUtils.array2List(result);
@@ -103,8 +118,8 @@ public class NewGoodsFragment extends BaseFragment {
 
             @Override
             public void onError(String error) {
-                msrl.setRefreshing(false);
-                mtvRfresh.setVisibility(View.GONE);
+                mSrl.setRefreshing(false);
+                mTvRefresh.setVisibility(View.GONE);
                 mAdapter.setMore(false);
                 CommonUtils.showLongToast(error);
                 L.e("error: "+error);
@@ -116,7 +131,7 @@ public class NewGoodsFragment extends BaseFragment {
      * 下拉刷新
      */
     private void setPullDownListener() {
-        mrv.setOnScrollListener(new RecyclerView.OnScrollListener() {
+        mRv.setOnScrollListener(new RecyclerView.OnScrollListener() {
             /**
              * 再次请求数据，请求下一页数据
              * @param recyclerView
@@ -133,14 +148,12 @@ public class NewGoodsFragment extends BaseFragment {
                     downloadNewGoods(I.ACTION_PULL_DOWN);
 
                 }
-
             }
-
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 int firstPosition = glm.findFirstVisibleItemPosition();
-                msrl.setEnabled(firstPosition==0);
+                mSrl.setEnabled(firstPosition==0);
             }
         });
     }
@@ -149,19 +162,9 @@ public class NewGoodsFragment extends BaseFragment {
     protected void initData() {
         downloadNewGoods(I.ACTION_DOWNLOAD);
     }
-    @Override
-    protected void initView() {
-        msrl.setColorSchemeColors(
-                getResources().getColor(R.color.google_blue),
-                getResources().getColor(R.color.google_green),
-                getResources().getColor(R.color.google_red),
-                getResources().getColor(R.color.google_yellow)
-        );
-        glm = new GridLayoutManager(mContext, I.COLUM_NUM);
-        mrv.setLayoutManager(glm);
-        mrv.setHasFixedSize(true);
-        mrv.setAdapter(mAdapter);
-        mrv.addItemDecoration(new SpaceItemDecoration(12));
-    }
 
+    @OnClick(R.id.backClickArea)
+    public void onClick() {
+
+    }
 }

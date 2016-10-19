@@ -13,11 +13,13 @@ import android.widget.TextView;
 import com.example.angela.fulicenter.R;
 import com.example.angela.fulicenter.bean.BoutiqueBean;
 import com.example.angela.fulicenter.utlis.ImageLoader;
+import com.example.angela.fulicenter.utlis.MFGT;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by Angela on 2016/10/19.
@@ -47,12 +49,12 @@ public class BoutiqueAdapter extends Adapter<BoutiqueAdapter.BoutiqueViewHodler>
      */
     @Override
     public void onBindViewHolder(BoutiqueViewHodler holder, int position) {
-
-            BoutiqueBean boutiqueBean = mList.get(position);
-            holder.mTvBoutiqueTitle.setText(boutiqueBean.getTitle());
-            holder.mTvBoutiqueName.setText(boutiqueBean.getName());
-            holder.mTvBoutiqueDescription.setText(boutiqueBean.getDescription());
-            ImageLoader.downloadImg(mContext,holder.mIvBoutiqueImg,boutiqueBean.getImageurl());
+        BoutiqueBean boutiqueBean = mList.get(position);
+        holder.mTvBoutiqueTitle.setText(boutiqueBean.getTitle());
+        holder.mTvBoutiqueName.setText(boutiqueBean.getName());
+        holder.mTvBoutiqueDescription.setText(boutiqueBean.getDescription());
+        ImageLoader.downloadImg(mContext,holder.mIvBoutiqueImg,boutiqueBean.getImageurl());
+        holder.mLayoutBoutiqueItem.setTag(boutiqueBean.getId());
 
     }
 
@@ -88,6 +90,12 @@ public class BoutiqueAdapter extends Adapter<BoutiqueAdapter.BoutiqueViewHodler>
         BoutiqueViewHodler(View view) {
             super(view);
             ButterKnife.bind(this, view);
+        }
+        //精选页面的二级跳转方法
+        @OnClick(R.id.layout_boutique_item)
+        public void onBoutiqueClick(){
+            int catId = (int) mLayoutBoutiqueItem.getTag();
+            MFGT.gotoBoutiqueChildActivity(mContext,catId);
         }
     }
 }
