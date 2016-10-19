@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -51,6 +50,7 @@ public class BoutiqueFragment extends Fragment {
         View layout = inflater.inflate(R.layout.fragment_newgoods, container, false);
         ButterKnife.bind(this, layout);
         mContext= (MainActivity) getContext();
+        mList=new ArrayList<>();
         mAdapter=new BoutiqueAdapter(mContext,mList);
         initView();
         initData();
@@ -103,11 +103,11 @@ public class BoutiqueFragment extends Fragment {
                 getResources().getColor(R.color.google_red),
                 getResources().getColor(R.color.google_yellow)
         );
-        llm = new GridLayoutManager(mContext, I.COLUM_NUM);
+        llm = new LinearLayoutManager(mContext);
         mRv.setLayoutManager(llm);
         mRv.setHasFixedSize(true);
         mRv.setAdapter(mAdapter);
-        mRv.addItemDecoration(new SpaceItemDecoration(12));
+        mRv.addItemDecoration(new SpaceItemDecoration(10));
     }
 
 }
