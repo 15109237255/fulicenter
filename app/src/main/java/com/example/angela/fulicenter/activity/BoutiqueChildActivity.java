@@ -41,14 +41,14 @@ public class BoutiqueChildActivity extends BaseActivity {
     ArrayList<NewGoodsBean> mList;
     int pageId=1;
     GridLayoutManager glm;
-    BoutiqueBean boutique;
+    BoutiqueBean mBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_boutique_child);
         ButterKnife.bind(this);
-        boutique=(BoutiqueBean) getIntent().getSerializableExtra(I.Boutique.CAT_ID);
-        if (boutique==null){
+        mBean= (BoutiqueBean) getIntent().getSerializableExtra(I.Boutique.CAT_ID);
+        if (mBean==null){
             finish();
         }
         mContext=this;
@@ -94,7 +94,7 @@ public class BoutiqueChildActivity extends BaseActivity {
         });
     }
     private void downloadNewGoods(final int action) {
-        NetDao.downloadNewGoods(mContext,boutique.getId(),pageId, new OkHttpUtils.OnCompleteListener<NewGoodsBean[]>() {
+        NetDao.downloadNewGoods(mContext,mBean.getId(),pageId, new OkHttpUtils.OnCompleteListener<NewGoodsBean[]>() {
             @Override
             public void onSuccess(NewGoodsBean[] result) {
                 mSrl.setRefreshing(false);

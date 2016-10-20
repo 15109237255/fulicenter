@@ -110,6 +110,12 @@ public class CategoryFragment extends BaseFragment {
 
     @Override
     protected void setListener() {
+//        mElvCategory.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+//            @Override
+//            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+//                return false;
+//            }
+//        });
 
     }
 }

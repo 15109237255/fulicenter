@@ -8,6 +8,32 @@
     android:layout_height="match_parent"
     tools:context="com.example.angela.fulicenter.activity.CategoryChildActivity">
     <include layout="@layout/common_head_title"/>
+    <LinearLayout
+        android:background="@color/orange"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+        <Button
+            android:id="@+id/btn_sort_price"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:text="价格"
+            android:drawableRight="@drawable/arrow_order_down"
+            android:paddingRight="5dp"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:id="@+id/btn_sort_addtime"
+            android:background="@null"
+            android:text="上架时间"
+            android:drawableRight="@drawable/arrow_order_down"
+            android:paddingRight="5dp"
+            android:layout_height="wrap_content"/>
+
+
+    </LinearLayout>
     <include layout="@layout/fragment_newgoods"/>
 
 </LinearLayout>
