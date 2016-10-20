@@ -10,13 +10,13 @@ import android.widget.TextView;
 import com.example.angela.fulicenter.I;
 import com.example.angela.fulicenter.R;
 import com.example.angela.fulicenter.adapter.GoodsAdapter;
-import com.example.angela.fulicenter.bean.BoutiqueBean;
 import com.example.angela.fulicenter.bean.NewGoodsBean;
 import com.example.angela.fulicenter.net.NetDao;
 import com.example.angela.fulicenter.net.OkHttpUtils;
 import com.example.angela.fulicenter.utlis.CommonUtils;
 import com.example.angela.fulicenter.utlis.ConvertUtils;
 import com.example.angela.fulicenter.utlis.L;
+import com.example.angela.fulicenter.utlis.MFGT;
 import com.example.angela.fulicenter.view.SpaceItemDecoration;
 
 import java.util.ArrayList;
@@ -25,10 +25,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class BoutiqueChildActivity extends BaseActivity {
+public class CategoryChildActivity extends BaseActivity {
 
-    @BindView(R.id.tv_common_title)
-    TextView mTvCommonTitle;
     @BindView(R.id.tv_refresh)
     TextView mTvRefresh;
     @BindView(R.id.rv)
@@ -36,25 +34,26 @@ public class BoutiqueChildActivity extends BaseActivity {
     @BindView(R.id.srl)
     SwipeRefreshLayout mSrl;
 
-    BoutiqueChildActivity mContext;
+    CategoryChildActivity mContext;
     GoodsAdapter mAdapter;
     ArrayList<NewGoodsBean> mList;
     int pageId=1;
     GridLayoutManager glm;
-    BoutiqueBean boutique;
+    int catId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setContentView(R.layout.activity_boutique_child);
+        setContentView(R.layout.activity_category_child);
         ButterKnife.bind(this);
-        boutique=(BoutiqueBean) getIntent().getSerializableExtra(I.Boutique.CAT_ID);
-        if (boutique==null){
-            finish();
-        }
         mContext=this;
         mList=new ArrayList<>();
         mAdapter=new GoodsAdapter(mContext,mList);
+        catId=getIntent().getIntExtra(I.CategoryChild.CAT_ID,0);
+        if (catId==0){
+            finish();
+        }
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
@@ -70,18 +69,18 @@ public class BoutiqueChildActivity extends BaseActivity {
         mRv.setHasFixedSize(true);
         mRv.setAdapter(mAdapter);
         mRv.addItemDecoration(new SpaceItemDecoration(10));
+    }
 
+    @Override
+    protected void setListener () {
+        setPullUpListener();//上拉刷新
+        setPullDownListener();//下拉刷新
     }
 
 
-        @Override
-        protected void setListener () {
-            setPullUpListener();//上拉刷新
-            setPullDownListener();//下拉刷新
-        }
-        /**
-         * 上拉刷新
-         */
+    /**
+     * 上拉刷新
+     */
     private void   setPullUpListener() {
         mSrl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -89,12 +88,12 @@ public class BoutiqueChildActivity extends BaseActivity {
                 mSrl.setRefreshing(true);
                 mTvRefresh.setVisibility(View.VISIBLE);
                 pageId=1;
-                downloadNewGoods(I.ACTION_PULL_UP);
+                downloadCategoryGoods(I.ACTION_PULL_UP);
             }
         });
     }
-    private void downloadNewGoods(final int action) {
-        NetDao.downloadNewGoods(mContext,boutique.getId(),pageId, new OkHttpUtils.OnCompleteListener<NewGoodsBean[]>() {
+    private void downloadCategoryGoods(final int action) {
+        NetDao.downloadCategoryGoods(mContext,catId,pageId, new OkHttpUtils.OnCompleteListener<NewGoodsBean[]>() {
             @Override
             public void onSuccess(NewGoodsBean[] result) {
                 mSrl.setRefreshing(false);
@@ -144,7 +143,7 @@ public class BoutiqueChildActivity extends BaseActivity {
                         &&lastPosition==mAdapter.getItemCount()-1
                         &&mAdapter.isMore()){
                     pageId++;
-                    downloadNewGoods(I.ACTION_PULL_DOWN);
+                    downloadCategoryGoods(I.ACTION_PULL_DOWN);
 
                 }
             }
@@ -159,11 +158,12 @@ public class BoutiqueChildActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        downloadNewGoods(I.ACTION_DOWNLOAD);
+        downloadCategoryGoods(I.ACTION_DOWNLOAD);
     }
+
 
     @OnClick(R.id.backClickArea)
     public void onClick() {
-
+        MFGT.finish(this);
     }
 }

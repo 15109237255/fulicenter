@@ -12,6 +12,7 @@ import com.example.angela.fulicenter.R;
 import com.example.angela.fulicenter.bean.CategoryChildBean;
 import com.example.angela.fulicenter.bean.CategoryGroupBean;
 import com.example.angela.fulicenter.utlis.ImageLoader;
+import com.example.angela.fulicenter.utlis.MFGT;
 
 import java.util.ArrayList;
 
@@ -120,10 +121,16 @@ public class CategoryAdapter extends BaseExpandableListAdapter {
             holder= (ChildViewHolder) view.getTag();
         }
         //绑定数据
-        CategoryChildBean child = getChild(groupPosition, childPosition);
+        final CategoryChildBean child = getChild(groupPosition, childPosition);
         if (child!=null){
             ImageLoader.downloadImg(mContext,holder.mIvCategoryChildThumb,child.getImageUrl());
             holder.mTvCategoryChildName.setText(child.getName());
+            holder.mLayoutCategoryChild.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    MFGT.gotoCategoryChildActivity(mContext,child.getId());
+                }
+            });
         }
 
         return view;

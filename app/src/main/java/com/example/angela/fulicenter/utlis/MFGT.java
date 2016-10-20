@@ -7,9 +7,9 @@ import android.content.Intent;
 import com.example.angela.fulicenter.I;
 import com.example.angela.fulicenter.R;
 import com.example.angela.fulicenter.activity.BoutiqueChildActivity;
+import com.example.angela.fulicenter.activity.CategoryChildActivity;
 import com.example.angela.fulicenter.activity.GoodsDetailActivity;
 import com.example.angela.fulicenter.activity.MainActivity;
-
 
 
 public class MFGT {
@@ -39,6 +39,12 @@ public class MFGT {
         Intent intent = new Intent();
         intent.setClass(context, BoutiqueChildActivity.class);
         intent.putExtra(I.Boutique.CAT_ID,catId);
+        startActivity(context,intent);
+    }
+    public static void gotoCategoryChildActivity(Context context, int catId){
+        Intent intent = new Intent();
+        intent.setClass(context, CategoryChildActivity.class);
+        intent.putExtra(I.CategoryChild.CAT_ID,catId);
         startActivity(context,intent);
     }
 }

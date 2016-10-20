@@ -57,7 +57,7 @@ public class GoodsAdapter extends Adapter {
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         ViewHolder holder = null;
         if (viewType == I.TYPE_FOOTER) {
-            holder = new FooterViewHolder(View.inflate(mContext, R.layout.item_footer, null));
+             holder = new FooterViewHolder(View.inflate(mContext, R.layout.item_footer, null));
         } else {
             holder = new GoodsViewHolder(View.inflate(mContext, R.layout.item_goods, null));
         }
