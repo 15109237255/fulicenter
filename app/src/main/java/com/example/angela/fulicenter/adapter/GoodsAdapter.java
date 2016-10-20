@@ -27,6 +27,10 @@ import butterknife.OnClick;
  * Created by Angela on 2016/10/17.
  */
 
+/**
+ * 新品首页
+ */
+
 public class GoodsAdapter extends Adapter {
     List<NewGoodsBean> mList;
     Context mContext;

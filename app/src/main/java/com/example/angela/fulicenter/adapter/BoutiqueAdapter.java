@@ -25,6 +25,9 @@ import butterknife.OnClick;
  * Created by Angela on 2016/10/19.
  */
 
+/**
+ * 精选首页
+ */
 public class BoutiqueAdapter extends Adapter<BoutiqueAdapter.BoutiqueViewHodler> {
 
     Context mContext;
