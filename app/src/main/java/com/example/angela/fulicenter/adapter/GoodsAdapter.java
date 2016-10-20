@@ -85,7 +85,7 @@ public class GoodsAdapter extends Adapter {
             ImageLoader.downloadImg(mContext,vh.mIvGoodsThumb,goods.getGoodsThumb());
             vh.mTvGoodsName.setText(goods.getGoodsName());
             vh.mTvGoodsPrice.setText(goods.getCurrencyPrice());
-           vh.mLayoutGoods.setTag(goods.getGoodsId());
+           vh.mLayoutGoods.setTag(goods.getId());
         }
     }
 
@@ -137,8 +137,8 @@ public class GoodsAdapter extends Adapter {
 
         @OnClick(R.id.layout_goods)
         public void onGoodsItemClick(){
-            int goodsId = (int) mLayoutGoods.getTag();
-            MFGT.gotoGoodsDetailsActivity(mContext,goodsId);
+            int goodId = (int) mLayoutGoods.getTag();
+            MFGT.gotoGoodsDetailsActivity(mContext,goodId);
         }
     }
     private void sortBy(){

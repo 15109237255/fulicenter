@@ -17,6 +17,7 @@ import com.example.angela.fulicenter.net.OkHttpUtils;
 import com.example.angela.fulicenter.utlis.CommonUtils;
 import com.example.angela.fulicenter.utlis.ConvertUtils;
 import com.example.angela.fulicenter.utlis.L;
+import com.example.angela.fulicenter.utlis.MFGT;
 import com.example.angela.fulicenter.view.SpaceItemDecoration;
 
 import java.util.ArrayList;
@@ -48,6 +49,7 @@ public class BoutiqueChildActivity extends BaseActivity {
         setContentView(R.layout.activity_boutique_child);
         ButterKnife.bind(this);
         mBean= (BoutiqueBean) getIntent().getSerializableExtra(I.Boutique.CAT_ID);
+
         if (mBean==null){
             finish();
         }
@@ -164,6 +166,7 @@ public class BoutiqueChildActivity extends BaseActivity {
 
     @OnClick(R.id.backClickArea)
     public void onClick() {
+        MFGT.finish(this);
 
     }
 }

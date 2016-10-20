@@ -57,7 +57,7 @@ public class BoutiqueAdapter extends Adapter<BoutiqueAdapter.BoutiqueViewHodler>
         holder.mTvBoutiqueName.setText(boutiqueBean.getName());
         holder.mTvBoutiqueDescription.setText(boutiqueBean.getDescription());
         ImageLoader.downloadImg(mContext,holder.mIvBoutiqueImg,boutiqueBean.getImageurl());
-        holder.mLayoutBoutiqueItem.setTag(boutiqueBean.getId());
+        holder.mLayoutBoutiqueItem.setTag(boutiqueBean);
 
     }
 
@@ -97,8 +97,8 @@ public class BoutiqueAdapter extends Adapter<BoutiqueAdapter.BoutiqueViewHodler>
         //精选页面的二级跳转方法
         @OnClick(R.id.layout_boutique_item)
         public void onBoutiqueClick(){
-            int catId = (int) mLayoutBoutiqueItem.getTag();
-            MFGT.gotoBoutiqueChildActivity(mContext,catId);
+            BoutiqueBean bean = (BoutiqueBean) mLayoutBoutiqueItem.getTag();
+            MFGT.gotoBoutiqueChildActivity(mContext,bean);
         }
     }
 }
