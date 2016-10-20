@@ -96,7 +96,6 @@ public class CategoryAdapter extends BaseExpandableListAdapter {
             holder = new GroupViewHolder(view);
             view.setTag(holder);
         } else {
-            view.getTag();
             holder = (GroupViewHolder) view.getTag();
         }
         //数据的绑定
@@ -104,7 +103,7 @@ public class CategoryAdapter extends BaseExpandableListAdapter {
         if (group != null) {
             ImageLoader.downloadImg(mContext, holder.mIvGroupThumb, group.getImageUrl());
             holder.mTvGroupName.setText(group.getName());
-            holder.mIvGroupThumb.setImageResource(isExpand ? R.mipmap.expand_off : R.mipmap.expand_on);
+            holder.mIvIndicator.setImageResource(isExpand ? R.mipmap.expand_off : R.mipmap.expand_on);
         }
         return view;
     }
@@ -133,6 +132,19 @@ public class CategoryAdapter extends BaseExpandableListAdapter {
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return false;
+    }
+
+    public void initData(ArrayList<CategoryGroupBean> groupList,
+                         ArrayList<ArrayList<CategoryChildBean>> childList) {
+        if (mGroupList!=null){
+            mGroupList.clear();
+        }
+        mGroupList.addAll(groupList);
+        if (mChildList!=null){
+            mChildList.clear();
+        }
+        mChildList.addAll(childList);
+        notifyDataSetChanged();
     }
 
     class GroupViewHolder {
