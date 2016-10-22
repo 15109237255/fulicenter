@@ -7,11 +7,13 @@ import android.view.View;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.example.angela.fulicenter.FuLiCenterApplication;
 import com.example.angela.fulicenter.R;
 import com.example.angela.fulicenter.fregment.BoutiqueFragment;
 import com.example.angela.fulicenter.fregment.CategoryFragment;
 import com.example.angela.fulicenter.fregment.NewGoodsFragment;
 import com.example.angela.fulicenter.utlis.L;
+import com.example.angela.fulicenter.utlis.MFGT;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -101,7 +103,11 @@ public class MainActivity extends BaseActivity {
                 index = 3;
                 break;
             case R.id.layout_personal_center:
-                index = 4;
+                if (FuLiCenterApplication.getUsername()==null){
+                    MFGT.gotoLogin(this);
+                }else {
+                    index = 4;
+                }
                 break;
         }
         setFragment();
