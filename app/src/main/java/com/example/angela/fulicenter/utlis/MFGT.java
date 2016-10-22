@@ -11,6 +11,7 @@ import com.example.angela.fulicenter.activity.CategoryChildActivity;
 import com.example.angela.fulicenter.activity.GoodsDetailActivity;
 import com.example.angela.fulicenter.activity.LoginActivity;
 import com.example.angela.fulicenter.activity.MainActivity;
+import com.example.angela.fulicenter.activity.RegisterActivity;
 import com.example.angela.fulicenter.bean.BoutiqueBean;
 import com.example.angela.fulicenter.bean.CategoryChildBean;
 
@@ -56,11 +57,19 @@ public class MFGT {
     }
 
     /**
-     * 登录页面
+     * 跳转到登录页面
      * @param context
      */
     public static void gotoLogin(Activity context){
         startActivity(context, LoginActivity.class);
+    }
+
+    /**
+     * 跳转到注册页面
+     * @param context
+     */
+    public static void gotoRegister(Activity context){
+        startActivity(context, RegisterActivity.class);
     }
 
 }
