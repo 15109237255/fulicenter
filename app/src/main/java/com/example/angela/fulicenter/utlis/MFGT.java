@@ -9,6 +9,7 @@ import com.example.angela.fulicenter.R;
 import com.example.angela.fulicenter.activity.BoutiqueChildActivity;
 import com.example.angela.fulicenter.activity.CategoryChildActivity;
 import com.example.angela.fulicenter.activity.GoodsDetailActivity;
+import com.example.angela.fulicenter.activity.LoginActivity;
 import com.example.angela.fulicenter.activity.MainActivity;
 import com.example.angela.fulicenter.bean.BoutiqueBean;
 import com.example.angela.fulicenter.bean.CategoryChildBean;
@@ -53,4 +54,13 @@ public class MFGT {
         intent.putExtra(I.CategoryChild.ID,list);
         startActivity(context,intent);
     }
+
+    /**
+     * 登录页面
+     * @param context
+     */
+    public static void gotoLogin(Activity context){
+        startActivity(context, LoginActivity.class);
+    }
+
 }
