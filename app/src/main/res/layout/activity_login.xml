@@ -37,7 +37,7 @@
                 android:paddingLeft="10dip"
                 android:singleLine="true"
                 android:textColor="#000"
-                android:textSize="10sp"
+                android:textSize="20sp"
                 android:layout_centerVertical="true"
                 android:id="@+id/username"
                 android:layout_height="match_parent"/>
@@ -68,7 +68,7 @@
                 android:paddingLeft="10dip"
                 android:singleLine="true"
                 android:textColor="#000"
-                android:textSize="10sp"
+                android:textSize="20sp"
                 android:layout_centerVertical="true"
                 android:id="@+id/password"
                 android:layout_height="match_parent"/>
