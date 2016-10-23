@@ -1,9 +1,11 @@
 package com.example.angela.fulicenter.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import com.example.angela.fulicenter.I;
 import com.example.angela.fulicenter.R;
 import com.example.angela.fulicenter.utlis.MFGT;
 
@@ -49,6 +51,15 @@ public class LoginActivity extends BaseActivity {
             case R.id.btn_register:
                 MFGT.gotoRegister(this);
                 break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == I.REQUEST_CODE_REGISTER){
+            String name=data.getStringExtra(I.User.USER_NAME);
+            mUsername.setText(name);
         }
     }
 }
