@@ -5,4 +5,8 @@
     <string name="now_refresh">now_refresh</string>
     <string name="no_more">no more</string>
     <string name="load_more">load more</string>
+    <string name="logining">logining</string>
+    <string name="login_fail_unknow_user">login fail unknow username</string>
+    <string name="login_fail_error_password">login fail error password</string>
+    <string name="user_database_error">user database error</string>
 </resources>

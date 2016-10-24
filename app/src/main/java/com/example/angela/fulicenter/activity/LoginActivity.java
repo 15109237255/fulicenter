@@ -7,10 +7,12 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 
+import com.example.angela.fulicenter.FuLiCenterApplication;
 import com.example.angela.fulicenter.I;
 import com.example.angela.fulicenter.R;
 import com.example.angela.fulicenter.bean.Result;
 import com.example.angela.fulicenter.bean.User;
+import com.example.angela.fulicenter.dao.UserDao;
 import com.example.angela.fulicenter.net.NetDao;
 import com.example.angela.fulicenter.net.OkHttpUtils;
 import com.example.angela.fulicenter.utlis.CommonUtils;
@@ -89,23 +91,30 @@ public class LoginActivity extends BaseActivity {
         final ProgressDialog pd=new ProgressDialog(mContext);
         pd.setMessage(getResources().getString(R.string.logining));
         pd.show();
-        L.d(TAG,"username="+username+"password="+password);
+        L.e(TAG,"username="+username+"password="+password);
         NetDao.login(mContext, username, password, new OkHttpUtils.OnCompleteListener<String>() {
             @Override
-            public void onSuccess(String result) {
-                Result res= ResultUtils.getResultFromJson(result,User.class);
-                L.d(TAG,"result="+result);
+            public void onSuccess(String s) {
+                Result result= ResultUtils.getResultFromJson(s,User.class);
+                L.e(TAG,"result="+result);
                 if (result==null){
                     CommonUtils.showShortToast(R.string.login_fail);
                 }else {
-                    if (res.isRetMsg()){
-                        User user= (User) res.getRetData();
-                        L.d(TAG,"user="+user);
-                        MFGT.finish(mContext);
+                    if (result.isRetMsg()){
+                        User user= (User) result.getRetData();
+                        L.e(TAG,"user="+user);
+                        UserDao dao=new UserDao(mContext);
+                        boolean isSuccess = dao.saveUser(user);
+                        if(isSuccess){
+                            FuLiCenterApplication.setUser(user);
+                            MFGT.finish(mContext);
+                        }else {
+                            CommonUtils.showLongToast(R.string.user_database_error);
+                        }
                     }else {
-                        if (res.getRetCode()==I.MSG_LOGIN_UNKNOW_USER){
+                        if (result.getRetCode()==I.MSG_LOGIN_UNKNOW_USER){
                             CommonUtils.showLongToast(R.string.login_fail_unknow_user);
-                        }else if (res.getRetCode()==I.MSG_LOGIN_ERROR_PASSWORD){
+                        }else if (result.getRetCode()==I.MSG_LOGIN_ERROR_PASSWORD){
                             CommonUtils.showLongToast(R.string.login_fail_error_password);
                         }else {
                             CommonUtils.showLongToast(R.string.login_fail);

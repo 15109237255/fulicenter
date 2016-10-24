@@ -72,6 +72,13 @@ public class MFGT {
         intent.setClass(context,RegisterActivity.class);
         startActivityForResult(context,intent,I.REQUEST_CODE_REGISTER);
     }
+
+    /**
+     * 从注册页面将结果返回到登录页面
+     * @param context
+     * @param intent
+     * @param requestCode
+     */
     public static void startActivityForResult(Activity context,Intent intent,int requestCode){
         context.startActivityForResult(intent,requestCode);
         context.overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);

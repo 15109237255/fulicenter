@@ -1,49 +1,47 @@
 package com.example.angela.fulicenter.activity;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.view.animation.AlphaAnimation;
-import android.widget.RelativeLayout;
 
+import com.example.angela.fulicenter.FuLiCenterApplication;
 import com.example.angela.fulicenter.R;
+import com.example.angela.fulicenter.bean.User;
+import com.example.angela.fulicenter.dao.UserDao;
+import com.example.angela.fulicenter.utlis.L;
 import com.example.angela.fulicenter.utlis.MFGT;
 
 public class SplashActivity extends AppCompatActivity {
     private final long sleepTime=2000;
+    SplashActivity mContext;
+
+    private static final  String TAG = SplashActivity.class.getSimpleName();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        AlphaAnimation animation=new AlphaAnimation(0.3f,1.0f);
-        animation.setDuration(1500);
-        RelativeLayout mActivitySplash= (RelativeLayout) findViewById(R.id.activity_splash);
-        mActivitySplash.startAnimation(animation);
-
+        mContext=this;
     }
-
     @Override
     protected void onStart() {
         super.onStart();
-        new Thread(new Runnable() {
-            long start = System.currentTimeMillis();
-            //create db
-            long costTime = System.currentTimeMillis() - start;
+        new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-
-                if (sleepTime-costTime>0){
-                    try{
-                        Thread.sleep(sleepTime-costTime);
-                    }catch (InterruptedException e){
-                        e.printStackTrace();
-                    }
+                User user = FuLiCenterApplication.getUser();
+                L.e(TAG,"fuliCenter,user= "+user);
+                if(user==null) {
+                    UserDao dao = new UserDao(mContext);
+                    user = dao.getUser("jcy1234567890");
+                    L.e(TAG,"database,user= "+user);
                 }
                 MFGT.gotoMainActivity(SplashActivity.this);
-                MFGT.finish(SplashActivity.this);
+                finish();
             }
+        },sleepTime);
 
-        }).start();
 
     }
 }

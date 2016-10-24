@@ -131,7 +131,8 @@ public class NetDao {
      * @param password
      * @param listener
      */
-    public static void login(Context context, String username, String password, OkHttpUtils.OnCompleteListener<String> listener){
+    public static void login(Context context, String username, String password,
+                             OkHttpUtils.OnCompleteListener<String> listener){
         OkHttpUtils<String> utils=new OkHttpUtils<>(context);
         utils.setRequestUrl(I.REQUEST_LOGIN)
                 .addParam(I.User.USER_NAME,username)
