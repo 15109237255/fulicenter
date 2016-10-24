@@ -12,6 +12,7 @@ import com.example.angela.fulicenter.I;
 import com.example.angela.fulicenter.R;
 import com.example.angela.fulicenter.bean.Result;
 import com.example.angela.fulicenter.bean.User;
+import com.example.angela.fulicenter.dao.SharePrefrenceUtils;
 import com.example.angela.fulicenter.dao.UserDao;
 import com.example.angela.fulicenter.net.NetDao;
 import com.example.angela.fulicenter.net.OkHttpUtils;
@@ -106,6 +107,7 @@ public class LoginActivity extends BaseActivity {
                         UserDao dao=new UserDao(mContext);
                         boolean isSuccess = dao.saveUser(user);
                         if(isSuccess){
+                            SharePrefrenceUtils.getInstance(mContext).saveUser(user.getMuserName());
                             FuLiCenterApplication.setUser(user);
                             MFGT.finish(mContext);
                         }else {

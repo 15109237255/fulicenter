@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.example.angela.fulicenter.FuLiCenterApplication;
 import com.example.angela.fulicenter.R;
 import com.example.angela.fulicenter.bean.User;
+import com.example.angela.fulicenter.dao.SharePrefrenceUtils;
 import com.example.angela.fulicenter.dao.UserDao;
 import com.example.angela.fulicenter.utlis.L;
 import com.example.angela.fulicenter.utlis.MFGT;
@@ -32,10 +33,15 @@ public class SplashActivity extends AppCompatActivity {
             public void run() {
                 User user = FuLiCenterApplication.getUser();
                 L.e(TAG,"fuliCenter,user= "+user);
-                if(user==null) {
+                String username = SharePrefrenceUtils.getInstance(mContext).getUser();
+                L.e(TAG,"fuliCenter,username= "+username);
+                if(user==null&&username!=null) {
                     UserDao dao = new UserDao(mContext);
-                    user = dao.getUser("jcy1234567890");
+                    user = dao.getUser(username);
                     L.e(TAG,"database,user= "+user);
+                    if (user!=null){
+                        FuLiCenterApplication.setUser(user);
+                    }
                 }
                 MFGT.gotoMainActivity(SplashActivity.this);
                 finish();
