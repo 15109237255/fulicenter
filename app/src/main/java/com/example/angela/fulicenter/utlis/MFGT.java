@@ -60,7 +60,10 @@ public class MFGT {
      * @param context
      */
     public static void gotoLogin(Activity context){
-        startActivity(context, LoginActivity.class);
+        Intent intent=new Intent();
+        intent.setClass(context,LoginActivity.class);
+        startActivityForResult(context,intent,I.REQUEST_CODE_LOGIN);
+
     }
 
     /**
