@@ -1,5 +1,6 @@
 package com.example.angela.fulicenter.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -8,6 +9,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.example.angela.fulicenter.FuLiCenterApplication;
+import com.example.angela.fulicenter.I;
 import com.example.angela.fulicenter.R;
 import com.example.angela.fulicenter.fregment.BoutiqueFragment;
 import com.example.angela.fulicenter.fregment.CategoryFragment;
@@ -20,8 +22,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends BaseActivity {
-
-
+    private static final String TAG=MainActivity.class.getSimpleName();
     @BindView(R.id.layout_new_good)
     RadioButton mLayoutNewGood;
     @BindView(R.id.layout_boutique)
@@ -125,10 +126,9 @@ public class MainActivity extends BaseActivity {
                 ft.add(R.id.fragment_container,mFragments[index]);
             }
             ft.show(mFragments[index]).commit();//fragment显示并提交
-            setRadioButtonStatus();
-            currentIndex=index;
         }
-
+        setRadioButtonStatus();
+        currentIndex=index;
     }
 
     private void setRadioButtonStatus() {
@@ -143,5 +143,21 @@ public class MainActivity extends BaseActivity {
     }
     public void onBackPressed(){
         finish();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        L.e(TAG,"onResume");
+        setFragment();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        L.e(TAG,"onActivityResult,requestCode"+requestCode);
+        if (requestCode== I.REQUEST_CODE_LOGIN&&FuLiCenterApplication.getUser()!=null){
+            index=4;
+        }
     }
 }
