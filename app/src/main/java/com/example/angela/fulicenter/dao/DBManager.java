@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.angela.fulicenter.bean.User;
+
 /**
  * Created by Angela on 2016/10/24.
  */
@@ -25,18 +26,34 @@ public class DBManager {
             dbHelper.closeDB();
         }
     }
-    public synchronized boolean saveUser(User user) {
+//    public synchronized boolean saveUser(User user) {
+//        SQLiteDatabase db = dbHelper.getWritableDatabase();
+//        ContentValues values = new ContentValues();
+//        values.put(UserDao.USER_COLUMN_NAME, user.getMuserName());
+//        values.put(UserDao.USER_COLUMN_NICK, user.getMuserNick());
+//        values.put(UserDao.USER_COLUMN_AVATAR_ID, user.getMavatarId());
+//        values.put(UserDao.USER_COLUMN_AVATAR_TYPE, user.getMavatarType());
+//        values.put(UserDao.USER_COLUMN_AVATAR_PATH, user.getMavatarPath());
+//        values.put(UserDao.USER_COLUMN_AVATAR_SUFFIX, user.getMavatarSuffix());
+//        values.put(UserDao.USER_COLUMN_AVATAR_LASTUPDATE_TIME, user.getMavatarLastUpdateTime());
+//        if (db.isOpen()) {
+//            return db.replace(UserDao.USER_TABLE_NAME, null, values) != -1;
+//        }
+//        return false;
+//    }
+
+    public synchronized boolean saveUser(User user){
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(UserDao.USER_COLUMN_NAME, user.getMuserName());
-        values.put(UserDao.USER_COLUMN_NICK, user.getMuserNick());
-        values.put(UserDao.USER_COLUMN_AVATAR_ID, user.getMavatarId());
-        values.put(UserDao.USER_COLUMN_AVATAR_PATH, user.getMavatarPath());
-        values.put(UserDao.USER_COLUMN_AVATAR_TYPE, user.getMavatarType());
-        values.put(UserDao.USER_COLUMN_AVATAR_SUFFIX, user.getMavatarSuffix());
-        values.put(UserDao.USER_COLUMN_AVATAR_LASTUPDATE_TIME, user.getMavatarLastUpdateTime());
-        if (db.isOpen()) {
-            return db.replace(UserDao.USER_TABLE_NAME, null, values) != -1;
+        values.put(UserDao.USER_COLUMN_NAME,user.getMuserName());
+        values.put(UserDao.USER_COLUMN_NICK,user.getMuserNick());
+        values.put(UserDao.USER_COLUMN_AVATAR_ID,user.getMavatarId());
+        values.put(UserDao.USER_COLUMN_AVATAR_TYPE,user.getMavatarType());
+        values.put(UserDao.USER_COLUMN_AVATA_PATH,user.getMavatarPath());
+        values.put(UserDao.USER_COLUMN_AVATAR_SUFFIX,user.getMavatarSuffix());
+        values.put(UserDao.USER_COLUMN_AVATAR_LASTAUPDATE_TIME,user.getMavatarLastUpdateTime());
+        if(db.isOpen()){
+            return  db.replace(UserDao.USER_TABLE_NAME,null,values)!=-1;
         }
         return false;
     }
@@ -51,10 +68,10 @@ public class DBManager {
             user.setMuserName(username);
             user.setMuserNick(cursor.getString(cursor.getColumnIndex(UserDao.USER_COLUMN_NICK)));
             user.setMavatarId(cursor.getInt(cursor.getColumnIndex(UserDao.USER_COLUMN_AVATAR_ID)));
-            user.setMavatarPath(cursor.getString(cursor.getColumnIndex(UserDao.USER_COLUMN_AVATAR_PATH)));
+            user.setMavatarPath(cursor.getString(cursor.getColumnIndex(UserDao.USER_COLUMN_AVATA_PATH)));
             user.setMavatarType(cursor.getInt(cursor.getColumnIndex(UserDao.USER_COLUMN_AVATAR_TYPE)));
             user.setMavatarSuffix(cursor.getString(cursor.getColumnIndex(UserDao.USER_COLUMN_AVATAR_SUFFIX)));
-            user.setMavatarLastUpdateTime(cursor.getString(cursor.getColumnIndex(UserDao.USER_COLUMN_AVATAR_LASTUPDATE_TIME)));
+            user.setMavatarLastUpdateTime(cursor.getString(cursor.getColumnIndex(UserDao.USER_COLUMN_AVATAR_LASTAUPDATE_TIME)));
             return user;
         }
         return null;
