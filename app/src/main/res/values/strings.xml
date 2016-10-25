@@ -10,4 +10,8 @@
     <string name="login_fail_error_password">login fail error password</string>
     <string name="user_database_error">user database error</string>
     <string name="user_profile">user profile</string>
+    <string name="update_user_nick_success">update user nick success</string>
+    <string name="update_user_avatar">update user avatar</string>
+    <string name="update_user_avatar_file">update user avatar file</string>
+    <string name="update_user_avatar_success">update user avatar success</string>
 </resources>

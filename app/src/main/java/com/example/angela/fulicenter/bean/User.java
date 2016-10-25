@@ -1,5 +1,7 @@
 package com.example.angela.fulicenter.bean;
 
+import com.example.angela.fulicenter.I;
+
 /**
  * Created by clawpo on 2016/10/21.
  */
@@ -58,7 +60,7 @@ public class User {
     }
 
     public String getMavatarSuffix() {
-        return mavatarSuffix;
+        return mavatarSuffix!=null?mavatarSuffix: I.AVATAR_SUFFIX_JPG;
     }
 
     public void setMavatarSuffix(String mavatarSuffix) {
