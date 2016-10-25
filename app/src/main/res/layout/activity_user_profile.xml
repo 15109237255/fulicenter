@@ -109,7 +109,7 @@
             android:id="@+id/tv_user_usernick"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="30sp"
+            android:textSize="20sp"
             android:gravity="center"
             android:padding="5dp"
             android:textColor="@color/black"

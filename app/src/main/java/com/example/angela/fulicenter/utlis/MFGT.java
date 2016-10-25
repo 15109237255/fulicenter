@@ -12,6 +12,7 @@ import com.example.angela.fulicenter.activity.GoodsDetailActivity;
 import com.example.angela.fulicenter.activity.LoginActivity;
 import com.example.angela.fulicenter.activity.MainActivity;
 import com.example.angela.fulicenter.activity.RegisterActivity;
+import com.example.angela.fulicenter.activity.UpdateNickActivity;
 import com.example.angela.fulicenter.activity.UserProfileActivity;
 import com.example.angela.fulicenter.bean.BoutiqueBean;
 import com.example.angela.fulicenter.bean.CategoryChildBean;
@@ -125,6 +126,15 @@ public class MFGT {
      */
     public static void gotoSetting(Activity context){
         startActivity(context, UserProfileActivity.class);
+    }
+
+    /**
+     * 跳转至修改昵称页面
+     * @param context
+     */
+    public static void gotoUpdateNick(Activity context){
+        startActivityForResult(context,new Intent(context, UpdateNickActivity.class),I.REQUEST_CODE_NICK);
+
     }
 
 

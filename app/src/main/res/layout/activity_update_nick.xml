@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_update_nick"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/list_background"
+    tools:context="com.example.angela.fulicenter.activity.UpdateNickActivity">
+    <include layout="@layout/common_head_title_white"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/et_update_user_name"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="10dip"
+        android:layout_marginRight="10dip"
+        android:paddingTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/white"
+        android:paddingLeft="10dip"
+        android:textSize="18sp"
+        />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/btn_save"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="10dip"
+        android:layout_marginRight="10dip"
+        android:background="@drawable/tb_btn_login_orange_normal"
+        android:gravity="center"
+        android:paddingBottom="7dp"
+        android:paddingTop="7dp"
+        android:text="@string/save"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        />
+
+</LinearLayout>
