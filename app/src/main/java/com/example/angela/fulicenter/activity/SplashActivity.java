@@ -5,12 +5,12 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.angela.fulicenter.FuLiCenterApplication;
-import com.example.angela.fulicenter.R;
 import com.example.angela.fulicenter.bean.User;
 import com.example.angela.fulicenter.dao.SharePrefrenceUtils;
 import com.example.angela.fulicenter.dao.UserDao;
 import com.example.angela.fulicenter.utlis.L;
 import com.example.angela.fulicenter.utlis.MFGT;
+import com.example.angela.fulicenter.R;
 
 public class SplashActivity extends AppCompatActivity {
     private final long sleepTime=2000;

@@ -12,6 +12,7 @@ import com.example.angela.fulicenter.activity.GoodsDetailActivity;
 import com.example.angela.fulicenter.activity.LoginActivity;
 import com.example.angela.fulicenter.activity.MainActivity;
 import com.example.angela.fulicenter.activity.RegisterActivity;
+import com.example.angela.fulicenter.activity.UserProfileActivity;
 import com.example.angela.fulicenter.bean.BoutiqueBean;
 import com.example.angela.fulicenter.bean.CategoryChildBean;
 
@@ -22,6 +23,11 @@ public class MFGT {
         activity.finish();
         activity.overridePendingTransition(R.anim.push_right_in,R.anim.push_right_out);
     }
+
+    /**
+     * 跳转主页面
+     * @param context
+     */
     public static void gotoMainActivity(Activity context){
         startActivity(context, MainActivity.class);
     }
@@ -30,22 +36,48 @@ public class MFGT {
         intent.setClass(context,cls);
         startActivity(context,intent);
     }
+
+    /**跳转至商品详情
+     *
+     * @param context
+     * @param goodId
+     */
     public static void gotoGoodsDetailsActivity(Context context, int goodId){
         Intent intent = new Intent();
         intent.setClass(context, GoodsDetailActivity.class);
         intent.putExtra(I.GoodsDetails.KEY_GOODS_ID,goodId);
         startActivity(context,intent);
     }
+
+    /**
+     *
+     * @param context
+     * @param intent
+     */
     public static void startActivity(Context context,Intent intent){
         context.startActivity(intent);
         ((Activity)context).overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
     }
+
+    /**
+     *跳转至精选首页
+     * @param context
+     * @param bean
+     */
     public static void gotoBoutiqueChildActivity(Context context, BoutiqueBean bean){
         Intent intent = new Intent();
         intent.setClass(context, BoutiqueChildActivity.class);
         intent.putExtra(I.Boutique.CAT_ID,bean);
         startActivity(context,intent);
     }
+
+    /**
+     *跳转至分类首页
+     * @param context
+     * @param catId
+     * @param groupName
+     * @param list
+     */
     public static void gotoCategoryChildActivity(Context context, int catId, String groupName, ArrayList<CategoryChildBean> list){
         Intent intent = new Intent();
         intent.setClass(context, CategoryChildActivity.class);
@@ -85,6 +117,14 @@ public class MFGT {
     public static void startActivityForResult(Activity context,Intent intent,int requestCode){
         context.startActivityForResult(intent,requestCode);
         context.overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
+    }
+
+    /**
+     * 跳转到个人设置页面
+     * @param context
+     */
+    public static void gotoSetting(Activity context){
+        startActivity(context, UserProfileActivity.class);
     }
 
 
