@@ -20,6 +20,7 @@ import com.example.angela.fulicenter.utlis.CommonUtils;
 import com.example.angela.fulicenter.utlis.L;
 import com.example.angela.fulicenter.utlis.MFGT;
 import com.example.angela.fulicenter.utlis.ResultUtils;
+import com.example.angela.fulicenter.view.DisplayUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,7 +48,7 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-
+        DisplayUtils.initBackWithTitle(mContext,getResources().getString(R.string.login));
     }
 
     @Override
