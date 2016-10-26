@@ -7,6 +7,7 @@ import com.example.angela.fulicenter.bean.BoutiqueBean;
 import com.example.angela.fulicenter.bean.CategoryChildBean;
 import com.example.angela.fulicenter.bean.CategoryGroupBean;
 import com.example.angela.fulicenter.bean.GoodsDetailsBean;
+import com.example.angela.fulicenter.bean.MessageBean;
 import com.example.angela.fulicenter.bean.NewGoodsBean;
 import com.example.angela.fulicenter.bean.Result;
 import com.example.angela.fulicenter.utlis.MD5;
@@ -196,5 +197,19 @@ public class NetDao {
                 .targetClass(String.class)
                 .execute(listener);
 
+    }
+
+    /**
+     * 请求收藏宝贝的数量
+     * @param context
+     * @param username
+     * @param listener
+     */
+    public static void getCollectsCount(Context context, String username, OkHttpUtils.OnCompleteListener<MessageBean> listener){
+        OkHttpUtils<MessageBean> utils=new OkHttpUtils<>(context);
+        utils.setRequestUrl(I.REQUEST_FIND_COLLECT_COUNT)
+                .addParam(I.Collect.USER_NAME,username)
+                .targetClass(MessageBean.class)
+                .execute(listener);
     }
 }
