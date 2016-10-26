@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.angela.fulicenter.FuLiCenterApplication;
@@ -41,6 +42,8 @@ public class PersonalCenterFragment extends BaseFragment {
     User user = null;
     @BindView(R.id.tv_collect_count)
     TextView mTvCollectCount;
+    @BindView(R.id.layout_center_collect)
+    LinearLayout mLayoutCenterCollect;
 
     @Nullable
     @Override
@@ -92,7 +95,10 @@ public class PersonalCenterFragment extends BaseFragment {
     public void gotoSetting() {
         MFGT.gotoSetting(mContext);
     }
-
+    @OnClick(R.id.layout_center_collect)
+    public void gotoCollectsList(){
+        MFGT.gotoCollects(mContext);
+    }
     private void initOrderList() {
 
     }
@@ -131,7 +137,7 @@ public class PersonalCenterFragment extends BaseFragment {
             public void onSuccess(MessageBean result) {
                 if (result != null && result.isSuccess()) {
                     mTvCollectCount.setText(result.getMsg());
-                }else {
+                } else {
                     mTvCollectCount.setText(String.valueOf(0));
                 }
             }
@@ -139,7 +145,7 @@ public class PersonalCenterFragment extends BaseFragment {
             @Override
             public void onError(String error) {
                 mTvCollectCount.setText(String.valueOf(0));
-                L.e(TAG,"error="+error);
+                L.e(TAG, "error=" + error);
             }
         });
     }

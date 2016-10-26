@@ -8,6 +8,7 @@ import com.example.angela.fulicenter.I;
 import com.example.angela.fulicenter.R;
 import com.example.angela.fulicenter.activity.BoutiqueChildActivity;
 import com.example.angela.fulicenter.activity.CategoryChildActivity;
+import com.example.angela.fulicenter.activity.CollectsActivity;
 import com.example.angela.fulicenter.activity.GoodsDetailActivity;
 import com.example.angela.fulicenter.activity.LoginActivity;
 import com.example.angela.fulicenter.activity.MainActivity;
@@ -137,5 +138,8 @@ public class MFGT {
 
     }
 
+    public static void gotoCollects(Activity context){
+        startActivity(context, CollectsActivity.class);
+    }
 
 }

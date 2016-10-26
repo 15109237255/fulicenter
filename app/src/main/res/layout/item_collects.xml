@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:background="@color/white"
               android:layout_margin="15dp"
@@ -30,17 +30,14 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:text="商品名称商品名称"
+        android:layout_below="@+id/ivGoodsThumb"
         />
-    <TextView
-        android:id="@+id/tvGoodsPrice"
-        android:textColor="@color/item_good_text"
-        android:textSize="13sp"
-        android:layout_marginTop="3dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:text="$399.99"
+    <ImageView
+        android:id="@+id/iv_collect_del"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:src="@mipmap/delete"
+        android:layout_alignParentRight="true"
+        />
 
-</LinearLayout>
+</RelativeLayout>

@@ -6,6 +6,7 @@ import com.example.angela.fulicenter.I;
 import com.example.angela.fulicenter.bean.BoutiqueBean;
 import com.example.angela.fulicenter.bean.CategoryChildBean;
 import com.example.angela.fulicenter.bean.CategoryGroupBean;
+import com.example.angela.fulicenter.bean.CollectBean;
 import com.example.angela.fulicenter.bean.GoodsDetailsBean;
 import com.example.angela.fulicenter.bean.MessageBean;
 import com.example.angela.fulicenter.bean.NewGoodsBean;
@@ -210,6 +211,23 @@ public class NetDao {
         utils.setRequestUrl(I.REQUEST_FIND_COLLECT_COUNT)
                 .addParam(I.Collect.USER_NAME,username)
                 .targetClass(MessageBean.class)
+                .execute(listener);
+    }
+
+    /**
+     * 下载用户的收藏商品
+     * @param context
+     * @param username
+     * @param pageId
+     * @param listener
+     */
+    public static void downloadCollects(Context context, String username, int pageId, OkHttpUtils.OnCompleteListener<CollectBean[]> listener){
+        OkHttpUtils<CollectBean[]> utils=new OkHttpUtils<>(context);
+        utils.setRequestUrl(I.REQUEST_FIND_COLLECTS)
+                .addParam(I.Collect.USER_NAME,username)
+                .addParam(I.PAGE_ID,String.valueOf(pageId))
+                .addParam(I.PAGE_SIZE,String.valueOf(I.PAGE_SIZE_DEFAULT))
+                .targetClass(CollectBean[].class)
                 .execute(listener);
     }
 }
