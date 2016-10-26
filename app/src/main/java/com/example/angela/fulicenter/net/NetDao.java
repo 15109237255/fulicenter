@@ -127,7 +127,7 @@ public class NetDao {
     }
 
     /**
-     * 注册请求
+     * 登录请求
      * @param context
      * @param username
      * @param password
@@ -161,6 +161,14 @@ public class NetDao {
                 .execute(listener);
 
     }
+
+    /**
+     * 修改头像
+     * @param context
+     * @param username
+     * @param file
+     * @param listener
+     */
     public static void updateAvatar(Context context, String username, File file,
                                   OkHttpUtils.OnCompleteListener<String> listener){
         OkHttpUtils<String> utils=new OkHttpUtils<>(context);
@@ -174,5 +182,19 @@ public class NetDao {
 
     }
 
+    /**
+     * 根据用户名查找用户信息
+     * @param context
+     * @param username
+     * @param listener
+     */
+    public static void syncUserInfo(Context context, String username,
+                             OkHttpUtils.OnCompleteListener<String> listener){
+        OkHttpUtils<String> utils=new OkHttpUtils<>(context);
+        utils.setRequestUrl(I.REQUEST_FIND_USER)
+                .addParam(I.User.USER_NAME,username)
+                .targetClass(String.class)
+                .execute(listener);
 
+    }
 }
