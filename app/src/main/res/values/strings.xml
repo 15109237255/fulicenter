@@ -15,4 +15,5 @@
     <string name="update_user_avatar_file">update user avatar file</string>
     <string name="update_user_avatar_success">update user avatar success</string>
     <string name="collect_title">collect title</string>
+    <string name="delete_collect_fail">delete collect fail</string>
 </resources>

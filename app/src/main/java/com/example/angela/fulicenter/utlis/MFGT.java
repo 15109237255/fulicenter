@@ -138,6 +138,10 @@ public class MFGT {
 
     }
 
+    /**
+     * 跳转至收藏的宝贝页面
+     * @param context
+     */
     public static void gotoCollects(Activity context){
         startActivity(context, CollectsActivity.class);
     }
