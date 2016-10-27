@@ -10,17 +10,19 @@ import android.widget.TextView;
 
 import com.example.angela.fulicenter.R;
 import com.example.angela.fulicenter.bean.CartBean;
+import com.example.angela.fulicenter.bean.GoodsDetailsBean;
+import com.example.angela.fulicenter.utlis.ImageLoader;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-class CardAdapter extends RecyclerView.Adapter {
+public class CartAdapter extends RecyclerView.Adapter {
     Context mContext;
     ArrayList<CartBean> mList;
 
-    public CardAdapter(Context context, ArrayList<CartBean> list) {
+    public CartAdapter(Context context, ArrayList<CartBean> list) {
         mContext = context;
         mList = new ArrayList<>();
         mList.addAll(list);
@@ -35,16 +37,16 @@ class CardAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-//        CardViewHolder ch = (CardViewHolder) holder;
-//        CartBean mCartBean = mList.get(position);
-//        GoodsDetailsBean goods = mCartBean.getGoods();
-//        if(goods!=null) {
-//            ImageLoader.downloadImg(mContext,ch.ivCardThumb,goods.getGoodsThumb());
-//            ch.ivCardGoodName.setText(goods.getGoodsName());
-//            ch.tvCartPrice.setText(goods.getCurrencyPrice());
-//        }
-//        ch.tvCardGoodsCount.setText("("+mCartBean.getCount()+")");
-//        ch.cbCartChecked.setChecked(false);
+        CardViewHolder ch = (CardViewHolder) holder;
+        CartBean mCartBean = mList.get(position);
+        GoodsDetailsBean goods = mCartBean.getGoods();
+        if(goods!=null) {
+            ImageLoader.downloadImg(mContext,ch.ivCartThumb,goods.getGoodsThumb());
+            ch.ivCardGoodName.setText(goods.getGoodsName());
+            ch.tvCartPrice.setText(goods.getCurrencyPrice());
+        }
+        ch.tvCartCount.setText("("+mCartBean.getCount()+")");
+        ch.cbCartSelected.setChecked(false);
     }
 
     @Override
@@ -63,20 +65,19 @@ class CardAdapter extends RecyclerView.Adapter {
 
     static class CardViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.cb_cart_selected)
-        CheckBox cbCartChecked;
+        CheckBox cbCartSelected;
         @BindView(R.id.iv_cart_thumb)
-        ImageView ivCardThumb;
+        ImageView ivCartThumb;
         @BindView(R.id.tv_cart_good_name)
         TextView ivCardGoodName;
         @BindView(R.id.iv_cart_add)
-        ImageView ivCardAdd;
+        ImageView ivCartAdd;
         @BindView(R.id.tv_cart_count)
-        TextView tvCardGoodsCount;
+        TextView tvCartCount;
         @BindView(R.id.iv_cart_del)
         ImageView ivCartDel;
         @BindView(R.id.tv_cart_price)
         TextView tvCartPrice;
-
 
         CardViewHolder(View view) {
             super(view);
@@ -84,3 +85,4 @@ class CardAdapter extends RecyclerView.Adapter {
         }
     }
 }
+
