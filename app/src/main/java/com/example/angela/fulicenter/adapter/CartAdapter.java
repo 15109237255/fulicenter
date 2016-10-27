@@ -14,12 +14,16 @@ import com.example.angela.fulicenter.I;
 import com.example.angela.fulicenter.R;
 import com.example.angela.fulicenter.bean.CartBean;
 import com.example.angela.fulicenter.bean.GoodsDetailsBean;
+import com.example.angela.fulicenter.bean.MessageBean;
+import com.example.angela.fulicenter.net.NetDao;
+import com.example.angela.fulicenter.net.OkHttpUtils;
 import com.example.angela.fulicenter.utlis.ImageLoader;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class CartAdapter extends RecyclerView.Adapter {
     Context mContext;
@@ -56,6 +60,7 @@ public class CartAdapter extends RecyclerView.Adapter {
                 mContext.sendBroadcast(new Intent(I.BROADCAST_UPDATA_CART));
             }
         });
+        ch.ivCartAdd.setTag(position);
     }
 
     @Override
@@ -69,7 +74,7 @@ public class CartAdapter extends RecyclerView.Adapter {
     }
 
 
-    static class CardViewHolder extends RecyclerView.ViewHolder {
+     class CardViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.cb_cart_selected)
         CheckBox cbCartSelected;
         @BindView(R.id.iv_cart_thumb)
@@ -88,6 +93,27 @@ public class CartAdapter extends RecyclerView.Adapter {
         CardViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
+        }
+        @OnClick(R.id.iv_cart_add)
+        public void addCart(){
+            final int position= (int) ivCartAdd.getTag();
+            CartBean cart=mList.get(position);
+            NetDao.updateCart(mContext, cart.getId(), cart.getCount() + 1, new OkHttpUtils.OnCompleteListener<MessageBean>() {
+                @Override
+                public void onSuccess(MessageBean result) {
+                    if (result!=null&&result.isSuccess()){
+                        mList.get(position).setCount(mList.get(position).getCount()+1);
+                        mContext.sendBroadcast(new Intent(I.BROADCAST_UPDATA_CART));
+                        tvCartCount.setText("("+mList.get(position).getCount()+")");
+                    }
+                }
+
+                @Override
+                public void onError(String error) {
+
+                }
+            });
+
         }
     }
 }
