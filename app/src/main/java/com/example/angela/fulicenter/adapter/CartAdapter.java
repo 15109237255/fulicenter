@@ -1,13 +1,16 @@
 package com.example.angela.fulicenter.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.angela.fulicenter.I;
 import com.example.angela.fulicenter.R;
 import com.example.angela.fulicenter.bean.CartBean;
 import com.example.angela.fulicenter.bean.GoodsDetailsBean;
@@ -24,8 +27,7 @@ public class CartAdapter extends RecyclerView.Adapter {
 
     public CartAdapter(Context context, ArrayList<CartBean> list) {
         mContext = context;
-        mList = new ArrayList<>();
-        mList.addAll(list);
+        mList = list;
     }
 
     @Override
@@ -38,7 +40,7 @@ public class CartAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         CardViewHolder ch = (CardViewHolder) holder;
-        CartBean mCartBean = mList.get(position);
+        final CartBean mCartBean = mList.get(position);
         GoodsDetailsBean goods = mCartBean.getGoods();
         if(goods!=null) {
             ImageLoader.downloadImg(mContext,ch.ivCartThumb,goods.getGoodsThumb());
@@ -47,6 +49,13 @@ public class CartAdapter extends RecyclerView.Adapter {
         }
         ch.tvCartCount.setText("("+mCartBean.getCount()+")");
         ch.cbCartSelected.setChecked(false);
+        ch.cbCartSelected.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                mCartBean.setChecked(isChecked);
+                mContext.sendBroadcast(new Intent(I.BROADCAST_UPDATA_CART));
+            }
+        });
     }
 
     @Override
@@ -55,10 +64,7 @@ public class CartAdapter extends RecyclerView.Adapter {
     }
 
     public void initData(ArrayList<CartBean> list) {
-        if (mList != null) {
-            mList.clear();
-        }
-        mList.addAll(list);
+        mList=list;
         notifyDataSetChanged();
     }
 
