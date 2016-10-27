@@ -52,7 +52,7 @@ public class CartAdapter extends RecyclerView.Adapter {
             ch.tvCartPrice.setText(goods.getCurrencyPrice());
         }
         ch.tvCartCount.setText("("+mCartBean.getCount()+")");
-        ch.cbCartSelected.setChecked(false);
+        ch.cbCartSelected.setChecked(mCartBean.isChecked());
         ch.cbCartSelected.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -115,6 +115,45 @@ public class CartAdapter extends RecyclerView.Adapter {
             });
 
         }
+         @OnClick(R.id.iv_cart_del)
+         public void delCart(){
+             final int position= (int) ivCartAdd.getTag();
+             CartBean cart=mList.get(position);
+             if (cart.getCount()>1) {
+                 NetDao.updateCart(mContext, cart.getId(), cart.getCount() + 1, new OkHttpUtils.OnCompleteListener<MessageBean>() {
+                     @Override
+                     public void onSuccess(MessageBean result) {
+                         if (result != null && result.isSuccess()) {
+                             mList.get(position).setCount(mList.get(position).getCount() - 1);
+                             mContext.sendBroadcast(new Intent(I.BROADCAST_UPDATA_CART));
+                             tvCartCount.setText("(" + mList.get(position).getCount() + ")");
+                         }
+                     }
+
+                     @Override
+                     public void onError(String error) {
+
+                     }
+                 });
+             }else {
+                NetDao.deleteCart(mContext, cart.getId(), new OkHttpUtils.OnCompleteListener<MessageBean>() {
+                    @Override
+                    public void onSuccess(MessageBean result) {
+                        if (result!=null&&result.isSuccess()){
+                            mList.remove(position);
+                            mContext.sendBroadcast(new Intent(I.BROADCAST_UPDATA_CART));
+                            notifyDataSetChanged();
+                        }
+                    }
+
+                    @Override
+                    public void onError(String error) {
+
+                    }
+                });
+             }
+
+         }
     }
 }
 

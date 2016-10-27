@@ -166,13 +166,14 @@ public class CartFragment extends BaseFragment {
         if (mList!=null&&mList.size()>0){
             for (CartBean c:mList){
                 if (c.isChecked()){
-                    sumPrice +=getPrice(c.getGoods().getCurrencyPrice())*c.getCount();
-                    rankPrice +=getPrice(c.getGoods().getRankPrice())*c.getCount();
+                    sumPrice += getPrice(c.getGoods().getCurrencyPrice())*c.getCount();
+                    rankPrice += getPrice(c.getGoods().getRankPrice())*c.getCount();
                 }
             }
             mTvCartSumPrice.setText("合计:￥"+Double.valueOf(rankPrice));
             mTvCartSavePrice.setText("节省:￥"+Double.valueOf(sumPrice-rankPrice));
         }else {
+//            setCartLayout(false);
             mTvCartSumPrice.setText("合计:￥0");
             mTvCartSavePrice.setText("节省:￥0");
         }
@@ -187,6 +188,7 @@ public class CartFragment extends BaseFragment {
         public void onReceive(Context context, Intent intent) {
             L.e(TAG,"updateCartReceiver.....");
             sumPrice();
+            setCartLayout(mList!=null&&mList.size()>0);
         }
     }
 
