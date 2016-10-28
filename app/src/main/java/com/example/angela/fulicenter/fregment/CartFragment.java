@@ -26,6 +26,7 @@ import com.example.angela.fulicenter.net.NetDao;
 import com.example.angela.fulicenter.net.OkHttpUtils;
 import com.example.angela.fulicenter.utlis.CommonUtils;
 import com.example.angela.fulicenter.utlis.L;
+import com.example.angela.fulicenter.utlis.MFGT;
 import com.example.angela.fulicenter.utlis.ResultUtils;
 import com.example.angela.fulicenter.view.SpaceItemDecoration;
 
@@ -61,6 +62,7 @@ public class CartFragment extends BaseFragment {
     TextView mTvNothing;
 
     updateCartReceiver mReceiver;
+    String cartIds="";
 
     @Nullable
     @Override
@@ -157,15 +159,24 @@ public class CartFragment extends BaseFragment {
     }
 
     @OnClick(R.id.tv_cart_buy)
-    public void onClick() {
+    public void buy() {
+        if (cartIds!=null && !cartIds.equals("") && cartIds.length()>0){
+            MFGT.gotobuy(mContext,cartIds);
+
+
+        }else {
+            CommonUtils.showLongToast(R.string.order_nothing);
+        }
     }
 
     private void sumPrice(){
+        cartIds="";
         int sumPrice=0;
         int rankPrice=0;
         if (mList!=null&&mList.size()>0){
             for (CartBean c:mList){
                 if (c.isChecked()){
+                    cartIds += c.getId()+",";
                     sumPrice += getPrice(c.getGoods().getCurrencyPrice())*c.getCount();
                     rankPrice += getPrice(c.getGoods().getRankPrice())*c.getCount();
                 }
@@ -173,6 +184,7 @@ public class CartFragment extends BaseFragment {
             mTvCartSumPrice.setText("合计:￥"+Double.valueOf(rankPrice));
             mTvCartSavePrice.setText("节省:￥"+Double.valueOf(sumPrice-rankPrice));
         }else {
+            cartIds="";
 //            setCartLayout(false);
             mTvCartSumPrice.setText("合计:￥0");
             mTvCartSavePrice.setText("节省:￥0");
@@ -203,7 +215,7 @@ public class CartFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        L.e(TAG,"onResume......");
+        L.e(TAG+"onResume");
         initData();
     }
 }

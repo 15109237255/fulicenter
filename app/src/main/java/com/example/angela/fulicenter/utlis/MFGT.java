@@ -12,6 +12,7 @@ import com.example.angela.fulicenter.activity.CollectsActivity;
 import com.example.angela.fulicenter.activity.GoodsDetailActivity;
 import com.example.angela.fulicenter.activity.LoginActivity;
 import com.example.angela.fulicenter.activity.MainActivity;
+import com.example.angela.fulicenter.activity.OrderActivity;
 import com.example.angela.fulicenter.activity.RegisterActivity;
 import com.example.angela.fulicenter.activity.UpdateNickActivity;
 import com.example.angela.fulicenter.activity.UserProfileActivity;
@@ -147,14 +148,23 @@ public class MFGT {
     }
 
     /**
-     * 从购物车跳转至购物车
+     * 从登录跳转至购物车
      * @param context
      */
     public static void gotoLoginFromCart(Activity context){
         Intent intent=new Intent();
         intent.setClass(context,LoginActivity.class);
         startActivityForResult(context,intent,I.REQUEST_CODE_LOGIN_FROM_CART);
+    }
 
+    /**
+     * 从购物车界面跳转至订单页面
+     * @param context
+     * @param cartIds
+     */
+    public static void gotobuy(Activity context,String cartIds){
+        Intent intent=new Intent(context, OrderActivity.class).putExtra(I.Cart.ID,cartIds);
+        startActivity(context,intent);
     }
 
 }
