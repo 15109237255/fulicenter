@@ -12,9 +12,11 @@ import com.example.angela.fulicenter.FuLiCenterApplication;
 import com.example.angela.fulicenter.I;
 import com.example.angela.fulicenter.R;
 import com.example.angela.fulicenter.bean.CartBean;
+import com.example.angela.fulicenter.bean.MessageBean;
 import com.example.angela.fulicenter.bean.User;
 import com.example.angela.fulicenter.net.NetDao;
 import com.example.angela.fulicenter.net.OkHttpUtils;
+import com.example.angela.fulicenter.utlis.CommonUtils;
 import com.example.angela.fulicenter.utlis.L;
 import com.example.angela.fulicenter.utlis.ResultUtils;
 import com.example.angela.fulicenter.view.DisplayUtils;
@@ -33,8 +35,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class OrderActivity extends BaseActivity implements PaymentHandler{
-    private static final String TAG=OrderActivity.class.getSimpleName();
+public class OrderActivity extends BaseActivity implements PaymentHandler {
+    private static final String TAG = OrderActivity.class.getSimpleName();
 
     @BindView(R.id.ed_order_name)
     EditText mEdOrderName;
@@ -52,7 +54,7 @@ public class OrderActivity extends BaseActivity implements PaymentHandler{
     OrderActivity mContext;
     ArrayList<CartBean> mList = null;
     String[] ids = new String[]{};
-    int rankPrice=0;
+    int rankPrice = 0;
     private static String URL = "http://218.244.151.190/demo/charge";
 
     @Override
@@ -72,16 +74,16 @@ public class OrderActivity extends BaseActivity implements PaymentHandler{
 
     @Override
     protected void initView() {
-        DisplayUtils.initBackWithTitle(mContext,getString(R.string.confirm_order));
+        DisplayUtils.initBackWithTitle(mContext, getString(R.string.confirm_order));
     }
 
     @Override
     protected void initData() {
         cartIds = getIntent().getStringExtra(I.Cart.ID);
         user = FuLiCenterApplication.getUser();
-        L.e(TAG,"cartIds"+cartIds);
-        if (cartIds==null || cartIds.equals("")
-                || user==null){
+        L.e(TAG, "cartIds" + cartIds);
+        if (cartIds == null || cartIds.equals("")
+                || user == null) {
             finish();
         }
         String[] ids = cartIds.split(",");
@@ -93,9 +95,9 @@ public class OrderActivity extends BaseActivity implements PaymentHandler{
             @Override
             public void onSuccess(String s) {
                 ArrayList<CartBean> list = ResultUtils.getCartFromJson(s);
-                if (list == null && list.size()==0){
+                if (list == null && list.size() == 0) {
                     finish();
-                }else {
+                } else {
                     mList.addAll(list);
                     sumPrice();
                 }
@@ -109,20 +111,23 @@ public class OrderActivity extends BaseActivity implements PaymentHandler{
     }
 
     private void sumPrice() {
-        rankPrice=0;
-        if (mList!=null&&mList.size()>0){
-            for (CartBean c:mList) {
+        rankPrice = 0;
+        if (mList != null || mList.size() > 0) {
+            for (CartBean c : mList) {
+                L.e(TAG, "c.id=" + c.getId());
                 for (String id : ids) {
+                    L.e(TAG, "order.id=" + id);
                     if (id.equals(String.valueOf(c.getId()))) {
                         rankPrice += getPrice(c.getGoods().getRankPrice()) * c.getCount();
                     }
                 }
             }
         }
-        mTvOrderPrice.setText("合计:￥"+Double.valueOf(rankPrice));
+        mTvOrderPrice.setText("合计:￥" + Double.valueOf(rankPrice));
     }
-    private Integer getPrice(String price){
-        price=price.substring(price.indexOf("￥")+1);
+
+    private Integer getPrice(String price) {
+        price = price.substring(price.indexOf("￥") + 1);
         return Integer.valueOf(price);
     }
 
@@ -133,30 +138,30 @@ public class OrderActivity extends BaseActivity implements PaymentHandler{
 
     @OnClick(R.id.tv_order_buy)
     public void onClick() {
-        String receiveName=mEdOrderName.getText().toString();
-        if (TextUtils.isEmpty(receiveName)){
+        String receiveName = mEdOrderName.getText().toString();
+        if (TextUtils.isEmpty(receiveName)) {
             mEdOrderName.setError("收货人姓名不能为空");
             mEdOrderName.requestFocus();
             return;
         }
-        String moblie=mEdOrderPhone.getText().toString();
-        if (TextUtils.isEmpty(moblie)){
+        String moblie = mEdOrderPhone.getText().toString();
+        if (TextUtils.isEmpty(moblie)) {
             mEdOrderPhone.setError("手机号码不能为空");
             mEdOrderPhone.requestFocus();
             return;
         }
-        if (!moblie.matches("[\\d]{11}")){
+        if (!moblie.matches("[\\d]{11}")) {
             mEdOrderPhone.setError("手机号码格式错误");
             mEdOrderPhone.requestFocus();
             return;
         }
-        String area=mSpinOrderProvince.getSelectedItem().toString();
-        if (TextUtils.isEmpty(area)){
+        String area = mSpinOrderProvince.getSelectedItem().toString();
+        if (TextUtils.isEmpty(area)) {
             Toast.makeText(OrderActivity.this, "收货地区不能为空", Toast.LENGTH_SHORT).show();
             return;
         }
-        String address=mEdOrderStreet.getText().toString();
-        if (TextUtils.isEmpty(address)){
+        String address = mEdOrderStreet.getText().toString();
+        if (TextUtils.isEmpty(address)) {
             mEdOrderStreet.setError("街道地址不能为空");
             mEdOrderStreet.requestFocus();
             return;
@@ -165,33 +170,33 @@ public class OrderActivity extends BaseActivity implements PaymentHandler{
     }
 
     private void gotoStatements() {
-        L.e(TAG,"rankPrice"+rankPrice);
+        L.e(TAG, "rankPrice" + rankPrice);
         //产生个订单号
-        String orderNo =new SimpleDateFormat("yyyyMMddhhmmss")
+        String orderNo = new SimpleDateFormat("yyyyMMddhhmmss")
                 .format(new Date());
 
         //构建账单json对象
-        JSONObject bill=new JSONObject();
+        JSONObject bill = new JSONObject();
 
         //自定义的额外信息 选填
         JSONObject extras = new JSONObject();
         try {
-            extras.put("extra1","extra1");
-            extras.put("extra2","extra2");
-        }catch (JSONException e){
+            extras.put("extra1", "extra1");
+            extras.put("extra2", "extra2");
+        } catch (JSONException e) {
             e.printStackTrace();
         }
 
         try {
-            bill.put("order_no",orderNo);
-            bill.put("amount",rankPrice*100);
-            bill.put("extras",extras);
-        }catch (JSONException e){
+            bill.put("order_no", orderNo);
+            bill.put("amount", rankPrice * 100);
+            bill.put("extras", extras);
+        } catch (JSONException e) {
             e.printStackTrace();
         }
 
         //壹收款 : 创建支付通道的对话框
-        PingppOne.showPaymentChannels(getSupportFragmentManager(),bill.toString(),URL,this);
+        PingppOne.showPaymentChannels(getSupportFragmentManager(), bill.toString(), URL, this);
     }
 
     @Override
@@ -217,11 +222,40 @@ public class OrderActivity extends BaseActivity implements PaymentHandler{
                     } else if (resultJson.has("success")) {
                         result = resultJson.optJSONObject("success").toString();
                     }
-                    L.e(TAG , result);
+                    L.e(TAG, result);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
+            int resultCode = data.getExtras().getInt("code");
+            switch (resultCode) {
+                case 1:
+                    paySuccess();
+                    CommonUtils.showLongToast(R.string.pingpp_title_activity_pay_sucessed);
+                    break;
+                case -1:
+                    CommonUtils.showLongToast(R.string.pingpp_pay_failed);
+                    finish();
+                    break;
+
+            }
         }
+    }
+
+    private void paySuccess() {
+        for (String id : ids) {
+            NetDao.deleteCart(mContext, Integer.valueOf(id), new OkHttpUtils.OnCompleteListener<MessageBean>() {
+                @Override
+                public void onSuccess(MessageBean result) {
+                    L.e(TAG, "result=" + result);
+                }
+
+                @Override
+                public void onError(String error) {
+
+                }
+            });
+        }
+        finish();
     }
 }
